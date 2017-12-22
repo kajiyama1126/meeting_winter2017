@@ -3,7 +3,7 @@ import numpy as np
 import progressbar
 from progressbar import ProgressBar
 
-from agent.agent import Agent_harnessing,Agent_harnessing_quantize,Agent_harnessing_quantize_add_send_data
+from agent.agent import Agent_harnessing,Agent_harnessing_quantize,Agent_harnessing_quantize_add_send_data,Agent_harnessing_grad
 from sq_mean.make_communication import Communication
 from sq_mean.problem import Problem
 
@@ -107,7 +107,7 @@ class Iteration(object):
         eta = self.eta[pattern]
         for i in range(self.n):
             if pattern % 2 == 0:
-                Agents.append(Agent_harnessing(self.n, self.m,self.A[i], self.b[i],eta, name=i, weight=None))
+                Agents.append(Agent_harnessing_grad(self.n, self.m,self.A[i], self.b[i],eta, name=i, weight=None))
             elif pattern % 2 == 1:
                 Agents.append(
                     Agent_harnessing_quantize_add_send_data(self.n, self.m,self.A[i], self.b[i],eta,  name=i, weight=None))

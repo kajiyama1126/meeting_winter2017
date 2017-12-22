@@ -7,9 +7,10 @@ if __name__ == '__main__':
     m = 20
     np.random.seed(0)  # ランダム値固定
 
-    iteration = 2000
+    iteration = 20
 
-    eta = [0.001,0.001,0.01,0.01,0.1,0.1]
+    # eta = [0.001,0.001,0.01,0.01,0.1,0.1]
+    eta = [0.01]
     pattern = len(eta)
     print(n, m, iteration)
     if pattern != len(eta):

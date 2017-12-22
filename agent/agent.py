@@ -1,4 +1,6 @@
 import numpy as np
+import cvxpy as cvx
+
 
 
 class Agent(object):
@@ -54,11 +56,56 @@ class Agent_harnessing(Agent):
         self.v_i = np.dot(self.weight, self.v) + (self.grad() - grad_bf)
 
 
-# class Agent_harnessing_grad(Agent_harnessing):
-#     def func(self,x):
-#         return np.linalg.norm(np.dot(self.A,x)-self.b)**2
-#
-#     def local_opt(self):
+class Agent_harnessing_grad(Agent_harnessing):
+    def __init__(self, n, m, A, b, eta, name, weight):
+        super(Agent_harnessing_grad, self).__init__(n, m, A, b,eta, name, weight)
+        # self.eta_i = self.make_eta()
+        self.eta_i = self.make_eta()
+        self.eta = np.zeros(self.n)
+
+    def initial_state(self):
+        self.x_i = np.random.rand(self.m)
+        self.x = np.zeros([self.n, self.m])
+        self.v_i = self.grad()
+        self.v = np.zeros([self.n, self.m])
+        self.local_opt()
+
+    def make_eta(self):
+        eta = cvx.Variable()
+        obj = cvx.Minimize(cvx.power(cvx.norm(self.A*(self.x_i-eta*self.v_i)-self.b),2))
+        prob = cvx.Problem(obj)
+        prob.solve()
+        # print(eta.value)
+        return eta.value
+
+    def send(self, j):
+        return (self.x_i, self.v_i,self.eta_i), self.name
+
+    def receive(self, x_j, name):
+        self.x[name] = x_j[0]
+        self.v[name] = x_j[1]
+        self.eta[name] = x_j[2]
+
+    def func(self,x):
+        return np.linalg.norm(np.dot(self.A,x)-self.b)**2
+
+    def local_opt(self):
+        self.x_opt = np.dot(np.dot(np.linalg.inv(np.dot(self.A.T,self.A)),self.A.T),self.b)
+
+    def update(self, k):
+        self.x[self.name] = self.x_i
+        self.v[self.name] = self.v_i
+        self.eta[self.name] = self.eta_i
+        grad_bf = self.grad()
+
+        func_val1 = self.func(self.x_i)-self.func(self.x_opt)
+
+        self.eta_bf = self.make_eta()
+        self.x_i = np.dot(self.weight, self.x) - self.eta_i * self.v_i
+        func_val2 = self.func(self.x_i) - self.func(self.x_opt)
+        self.v_i = np.dot(self.weight, self.v) + (self.grad() - grad_bf)
+        self.eta_i = np.dot(self.weight, self.eta) + self.make_eta() - self.eta_bf (func_val1/func_val2)
+        # print(np.dot(self.weight, self.eta),self.make_eta(),eta_bf)
 
 
 class Agent_harnessing_quantize(Agent_harnessing):
