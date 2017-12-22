@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import progressbar
+from progressbar import ProgressBar
 
 from agent.agent import Agent_harnessing,Agent_harnessing_quantize,Agent_harnessing_quantize_add_send_data
 from sq_mean.make_communication import Communication
@@ -115,7 +117,9 @@ class Iteration(object):
     def iteration(self, pattern):
         Agents = self.make_agent(pattern)
         self.f_error_history = []
+        prog = ProgressBar(max_value=self.iterate)
         for k in range(self.iterate):
+            prog.update(k+1)
             # グラフの時間変化
             for i in range(self.n):
                 Agents[i].weight = self.P_history[k][i]
