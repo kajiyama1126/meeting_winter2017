@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from agent.agent import Agent_harnessing,Agent_harnessing_quantize
+from agent.agent import Agent_harnessing,Agent_harnessing_quantize,Agent_harnessing_quantize_add_send_data
 from sq_mean.make_communication import Communication
 from sq_mean.problem import Problem
 
@@ -46,25 +46,49 @@ class Iteration(object):
         self.P, self.P_history = self.make_communication_graph()
         print('通信グラフ作成')
         f_error_history = [[] for i in range(self.pattern)]
+        send_y_data = [[] for i in range(self.pattern)]
+        send_z_data = [[] for i in range(self.pattern)]
         for agent in range(self.pattern):
-            f_error_history[agent] = self.iteration(agent)
+            self.iteration(agent)
+            f_error_history[agent] = self.send_f_error_history()
+            if agent %2 ==1:
+                send_y_data[agent],send_z_data[agent] = self.send_y_data_zdata()
         print('計算終了')
         print('finish')
 
         self.make_graph(f_error_history)
+        self.send_data_check(send_y_data,send_z_data)
 
     def make_graph(self, f_error):
-        label = ['DSM', 'Proposed']
+        label = ['Not Quantize', 'Quantize']
         line = ['-', '-.']
         for i in range(self.pattern):
-            # stepsize = '_s(k)=' + str(self.step[i]) + '/k+10'
-            stepsize = ' c=' + str(self.eta[i])
-            plt.plot(f_error[i], label=label[i % 2] + stepsize, linestyle=line[i % 2], linewidth=1)
+            if i % 2==0:
+                stepsize = ' c=' + str(self.eta[i])
+                plt.plot(f_error[i], label=label[i % 2] + stepsize, linestyle=line[i % 2], linewidth=1)
+        for i in range(self.pattern):
+            if i % 2==1:
+                stepsize = ' c=' + str(self.eta[i])
+                plt.plot(f_error[i], label=label[i % 2] + stepsize, linestyle=line[i % 2], linewidth=1)
+
         plt.legend()
         plt.yscale('log')
         plt.xlabel('iteration $k$', fontsize=10)
         plt.ylabel('$max_{i}$ $f(x_i(k))-f^*$', fontsize=10)
         plt.show()
+
+    def send_data_check(self,send_y_data,send_z_data):
+        for i in range(len(send_y_data)):
+            if i %2 ==1:
+                for j in range(self.n):
+                    if send_y_data[i][0][j] !=[]:
+                        plt.plot(send_y_data[i][0][j],'o',label='$||y_{ij}||_{\infty}$')
+                        plt.plot(send_z_data[i][0][j], 'o', label='$||z_{ij}||_{\infty}$')
+                        plt.xlabel('iteration $k$')
+                        plt.legend()
+                        plt.show()
+                        break
+        return
 
     def make_communication_graph(self):  # 通信グラフを作成＆保存
         weight_graph = Communication(self.n, 4, 0.3)
@@ -81,16 +105,16 @@ class Iteration(object):
         eta = self.eta[pattern]
         for i in range(self.n):
             if pattern % 2 == 0:
-                Agents.append(Agent_harnessing(self.n, self.m,self.A[i], self.b[i], name=i, weight=None))
+                Agents.append(Agent_harnessing(self.n, self.m,self.A[i], self.b[i],eta, name=i, weight=None))
             elif pattern % 2 == 1:
                 Agents.append(
-                    Agent_harnessing_quantize(self.n, self.m,self.A[i], self.b[i],  name=i, weight=None))
+                    Agent_harnessing_quantize_add_send_data(self.n, self.m,self.A[i], self.b[i],eta,  name=i, weight=None))
 
         return Agents
 
     def iteration(self, pattern):
         Agents = self.make_agent(pattern)
-        f_error_history = []
+        self.f_error_history = []
         for k in range(self.iterate):
             # グラフの時間変化
             for i in range(self.n):
@@ -113,9 +137,19 @@ class Iteration(object):
                 f_value.append(estimate_value)
 
             # x_error_history[agent].append(np.linalg.norm(Agents[0].x_i- x_opt)**2)
-            f_error_history.append(np.max(f_value) - self.f_opt)
+            self.f_error_history.append(np.max(f_value) - self.f_opt)
 
-        return f_error_history
+            if pattern % 2==1:
+                self.y_data = [[] for i in range(self.n)]
+                self.z_data = [[] for i in range(self.n)]
+                for i in range(self.n):
+                    self.y_data[i],self.z_data[i] = Agents[i].send_y_data_zdata()
+
+    def send_f_error_history(self):
+        return self.f_error_history
+
+    def send_y_data_zdata(self):
+        return self.y_data,self.z_data
 
     def optimal_value(self, x_i):
 

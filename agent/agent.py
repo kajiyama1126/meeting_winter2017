@@ -2,7 +2,7 @@ import numpy as np
 
 
 class Agent(object):
-    def __init__(self, n, m, A, b,  name, weight):
+    def __init__(self, n, m, A, b, name, weight):
         self.n = n
         self.m = m
         self.A = A
@@ -24,9 +24,9 @@ class Agent(object):
 
 
 class Agent_harnessing(Agent):
-    def __init__(self, n, m, A, b, name, weight):
-        super(Agent_harnessing, self).__init__(n, m, A, b,  name, weight)
-        self.eta = 0.01
+    def __init__(self, n, m, A, b, eta, name, weight):
+        super(Agent_harnessing, self).__init__(n, m, A, b, name, weight)
+        self.eta = eta
 
     def initial_state(self):
         self.x_i = np.random.rand(self.m)
@@ -53,6 +53,7 @@ class Agent_harnessing(Agent):
         self.x_i = np.dot(self.weight, self.x) - self.eta * self.v_i
         self.v_i = np.dot(self.weight, self.v) + (self.grad() - grad_bf)
 
+
 # class Agent_harnessing_grad(Agent_harnessing):
 #     def func(self,x):
 #         return np.linalg.norm(np.dot(self.A,x)-self.b)**2
@@ -61,9 +62,9 @@ class Agent_harnessing(Agent):
 
 
 class Agent_harnessing_quantize(Agent_harnessing):
-    def __init__(self, n, m, A, b, name, weight):
-        super(Agent_harnessing_quantize, self).__init__(n, m, A, b, name, weight)
-        self.eta = 0.01
+    def __init__(self, n, m, A, b, eta, name, weight):
+        super(Agent_harnessing_quantize, self).__init__(n, m, A, b, eta, name, weight)
+        self.eta = eta
         self.Encoder = Encoder(self.n, self.m)
         self.Decoder = Decoder(self.n, self.m)
         self.x_E = np.zeros([n, m])
@@ -73,7 +74,6 @@ class Agent_harnessing_quantize(Agent_harnessing):
         self.h_x = 1
         self.h_v = 1
 
-
     def make_h(self):
         self.h_x = self.h_x * 0.99
         self.h_v = self.h_v * 0.99
@@ -81,8 +81,8 @@ class Agent_harnessing_quantize(Agent_harnessing):
     def send(self, j):
         self.Encoder.x_encode(self.x_i, j, self.h_x)
         self.Encoder.v_encode(self.v_i, j, self.h_v)
-        state,name = self.Encoder.send_y_z(j,self.name)
-        return state,name
+        state, name = self.Encoder.send_y_z(j, self.name)
+        return state, name
 
     def receive(self, x_j, name):
         self.Decoder.get_y_z(x_j, name)
@@ -92,14 +92,14 @@ class Agent_harnessing_quantize(Agent_harnessing):
     def update(self, k):
         self.x_E, self.v_E = self.Encoder.send_x_E_v_E()
         self.x_D, self.v_D = self.Decoder.send_x_D_v_D()
-        x = self.x_D-self.x_E
+        x = self.x_D - self.x_E
         x[self.name] = np.zeros(self.m)
-        v = self.v_D-self.v_E
+        v = self.v_D - self.v_E
         v[self.name] = np.zeros(self.m)
 
         grad_bf = self.grad()
         self.x_i = self.x_i + np.dot(self.weight, x) - self.eta * self.v_i
-        self.v_i = self.v_i + np.dot(self.weight, v)+ (self.grad() - grad_bf)
+        self.v_i = self.v_i + np.dot(self.weight, v) + (self.grad() - grad_bf)
 
         self.make_h()
         # print(self.h_x,self.h_v)
@@ -126,19 +126,19 @@ class Encoder(object):
         self.z[j] = self.quantize(tmp)
         self.v_E[j] = h_v * self.z[j] + self.v_E[j]
 
-    def send_y_z(self, j,name):
+    def send_y_z(self, j, name):
         return (self.y[j], self.z[j]), name
 
     def send_x_E_v_E(self):
         # print(self.x_E, self.v_E)
         return self.x_E, self.v_E
 
-    def send_x_v(self,name):
-        return self.x_E[name],self.v_E[name]
+    def send_x_v(self, name):
+        return self.x_E[name], self.v_E[name]
 
     def quantize(self, x_i):
         tmp = np.around(x_i)
-        print(max(tmp))
+        # print(max(tmp))
         return tmp
 
 
@@ -162,8 +162,30 @@ class Decoder(object):
     def v_decode(self, j, h_v):
         self.v_D[j] = h_v * self.z[j] + self.v_D[j]
 
-    def send_x_v(self,name):
-        return self.x_D[name],self.v_D[name]
+    def send_x_v(self, name):
+        return self.x_D[name], self.v_D[name]
 
     def send_x_D_v_D(self):
         return self.x_D, self.v_D
+
+
+class Agent_harnessing_quantize_add_send_data(Agent_harnessing_quantize):
+    def __init__(self, n, m, A, b, eta, name, weight):
+        super(Agent_harnessing_quantize_add_send_data, self).__init__(n, m, A, b, eta, name, weight)
+        self.send_max_y_data = [[] for i in range(self.n)]
+        self.send_max_z_data = [[] for i in range(self.n)]
+
+    def send(self, j):
+        self.Encoder.x_encode(self.x_i, j, self.h_x)
+        self.Encoder.v_encode(self.v_i, j, self.h_v)
+        state, name = self.Encoder.send_y_z(j, self.name)
+        if self.weight[j] != 0:
+            self.send_max_y_data[j].append(np.linalg.norm(state[0], np.inf))
+            self.send_max_z_data[j].append(np.linalg.norm(state[1], np.inf))
+        # else:
+        #     self.send_max_y_data[j].append(None)
+        #     self.send_max_z_data[j].append(None)
+        return state, name
+
+    def send_y_data_zdata(self):
+        return self.send_max_y_data, self.send_max_z_data
