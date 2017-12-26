@@ -66,11 +66,11 @@ class Iteration(object):
         line = ['-', '-.']
         for i in range(self.pattern):
             if i % 2==0:
-                stepsize = ' c=' + str(self.eta[i])
+                stepsize = ' $\eta=$' + str(self.eta[i])
                 plt.plot(f_error[i], label=label[i % 2] + stepsize, linestyle=line[i % 2], linewidth=1)
         for i in range(self.pattern):
             if i % 2==1:
-                stepsize = ' c=' + str(self.eta[i])
+                stepsize = ' $\eta=$' + str(self.eta[i])
                 plt.plot(f_error[i], label=label[i % 2] + stepsize, linestyle=line[i % 2], linewidth=1)
 
         plt.legend()

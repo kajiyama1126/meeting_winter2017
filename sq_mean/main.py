@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     iteration = 2000
 
-    eta = [0.001,0.001,0.01,0.01,0.1,0.1]
+    eta = [0.01,0.01]
     pattern = len(eta)
     print(n, m, iteration)
     if pattern != len(eta):
