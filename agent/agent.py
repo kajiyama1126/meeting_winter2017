@@ -79,15 +79,21 @@ class Agent_harnessing_quantize(Agent_harnessing):
         self.h_v = self.h_v * 0.99
 
     def send(self, j):
-        self.Encoder.x_encode(self.x_i, j, self.h_x)
-        self.Encoder.v_encode(self.v_i, j, self.h_v)
-        state, name = self.Encoder.send_y_z(j, self.name)
-        return state, name
+        if self.weight[j] == 0:
+            return None, j
+        else:
+            self.Encoder.x_encode(self.x_i, j, self.h_x)
+            self.Encoder.v_encode(self.v_i, j, self.h_v)
+            state, name = self.Encoder.send_y_z(j, self.name)
+            return state, name
 
     def receive(self, x_j, name):
-        self.Decoder.get_y_z(x_j, name)
-        self.Decoder.x_decode(name, self.h_x)
-        self.Decoder.v_decode(name, self.h_v)
+        if x_j is None:
+            pass
+        else:
+            self.Decoder.get_y_z(x_j, name)
+            self.Decoder.x_decode(name, self.h_x)
+            self.Decoder.v_decode(name, self.h_v)
 
     def update(self, k):
         self.x_E, self.v_E = self.Encoder.send_x_E_v_E()
@@ -176,16 +182,21 @@ class Agent_harnessing_quantize_add_send_data(Agent_harnessing_quantize):
         self.send_max_z_data = [[] for i in range(self.n)]
 
     def send(self, j):
-        self.Encoder.x_encode(self.x_i, j, self.h_x)
-        self.Encoder.v_encode(self.v_i, j, self.h_v)
-        state, name = self.Encoder.send_y_z(j, self.name)
-        if self.weight[j] != 0:
-            self.send_max_y_data[j].append(np.linalg.norm(state[0], np.inf))
-            self.send_max_z_data[j].append(np.linalg.norm(state[1], np.inf))
-        # else:
-        #     self.send_max_y_data[j].append(None)
-        #     self.send_max_z_data[j].append(None)
-        return state, name
+        if self.weight[j] == 0:
+            return None, j
+        else:
+            self.Encoder.x_encode(self.x_i, j, self.h_x)
+            self.Encoder.v_encode(self.v_i, j, self.h_v)
+            state, name = self.Encoder.send_y_z(j, self.name)
+            if self.weight[j] != 0:
+                self.send_max_y_data[j].append(np.linalg.norm(state[0], np.inf))
+                self.send_max_z_data[j].append(np.linalg.norm(state[1], np.inf))
+            # else:
+            #     self.send_max_y_data[j].append(None)
+            #     self.send_max_z_data[j].append(None)
+            return state, name
 
     def send_y_data_zdata(self):
         return self.send_max_y_data, self.send_max_z_data
+
+

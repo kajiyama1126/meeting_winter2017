@@ -53,6 +53,7 @@ class Iteration(object):
         for agent in range(self.pattern):
             self.iteration(agent)
             f_error_history[agent] = self.send_f_error_history()
+
             if agent %2 ==1:
                 send_y_data[agent],send_z_data[agent] = self.send_y_data_zdata()
         print('計算終了')
