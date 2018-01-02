@@ -1,5 +1,5 @@
 import numpy as np
-
+import math
 
 class Agent(object):
     def __init__(self, n, m, A, b, name, weight):
@@ -59,6 +59,17 @@ class Agent_harnessing(Agent):
 #         return np.linalg.norm(np.dot(self.A,x)-self.b)**2
 #
 #     def local_opt(self):
+
+class Agent_harnessing_logistic(Agent_harnessing):
+
+    def grad(self):
+        g = 0
+        # print(len(self.A))
+        for i in range(len(self.A)):
+            x = np.dot(self.x_i,self.A[i])
+            g += ((math.exp(x) / (1 + math.exp(x))) - self.b[i])*self.A[i]
+
+        return g
 
 
 class Agent_harnessing_quantize(Agent_harnessing):
