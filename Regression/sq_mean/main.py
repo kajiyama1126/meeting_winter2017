@@ -1,6 +1,6 @@
 import numpy as np
 
-from sq_mean.iteration import Iteration
+from Regression.sq_mean.iteration import Iteration
 
 if __name__ == '__main__':
     n = 25

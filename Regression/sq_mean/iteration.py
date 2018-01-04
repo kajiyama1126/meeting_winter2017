@@ -1,11 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import progressbar
 from progressbar import ProgressBar
 
-from agent.agent import Agent_harnessing,Agent_harnessing_quantize,Agent_harnessing_quantize_add_send_data
-from sq_mean.make_communication import Communication
-from sq_mean.problem import Problem
+from agent.agent import Agent_harnessing, Agent_harnessing_quantize_add_send_data
+from Regression.sq_mean.make_communication import Communication
+from Regression.sq_mean.problem import Problem
 
 
 class Iteration(object):

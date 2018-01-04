@@ -24,14 +24,10 @@ print(__doc__)
 
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from mpl_toolkits.mplot3d import Axes3D
 from sklearn import datasets
-from sklearn.decomposition import PCA
-import pandas as pd
-import math
 import numpy as np
-from agent.agent import Agent_harnessing,Agent_harnessing_logistic
-from sq_mean.make_communication import Communication
+from agent.agent import Agent_harnessing_logistic
+from Regression.sq_mean.make_communication import Communication
 
 n = 10
 m = 3

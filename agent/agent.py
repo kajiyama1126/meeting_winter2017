@@ -60,16 +60,7 @@ class Agent_harnessing(Agent):
 #
 #     def local_opt(self):
 
-class Agent_harnessing_logistic(Agent_harnessing):
 
-    def grad(self):
-        g = 0
-        # print(len(self.A))
-        for i in range(len(self.A)):
-            x = np.dot(self.x_i,self.A[i])
-            g += ((math.exp(x) / (1 + math.exp(x))) - self.b[i])*self.A[i]
-
-        return g
 
 
 class Agent_harnessing_quantize(Agent_harnessing):
@@ -85,7 +76,7 @@ class Agent_harnessing_quantize(Agent_harnessing):
         self.h_x = 1
         self.h_v = 1
 
-    def make_h(self):
+    def make_h(self,k):
         self.h_x = self.h_x * 0.99
         self.h_v = self.h_v * 0.99
 
@@ -118,7 +109,7 @@ class Agent_harnessing_quantize(Agent_harnessing):
         self.x_i = self.x_i + np.dot(self.weight, x) - self.eta * self.v_i
         self.v_i = self.v_i + np.dot(self.weight, v) + (self.grad() - grad_bf)
 
-        self.make_h()
+        self.make_h(k)
         # print(self.h_x,self.h_v)
         # print(self.x_D,self.x_E)
 
@@ -209,5 +200,8 @@ class Agent_harnessing_quantize_add_send_data(Agent_harnessing_quantize):
 
     def send_y_data_zdata(self):
         return self.send_max_y_data, self.send_max_z_data
+
+
+
 
 
