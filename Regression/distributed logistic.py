@@ -78,6 +78,7 @@ for i in range(n):
     print(Agents[i].x_i)
 
 
+
 plt.scatter(X1[:50,0],X1[:50,1],color='r')
 plt.scatter(X1[50:100,0],X1[50:100,1] ,color='b')
 # plt.plot(x0,x1)
