@@ -203,5 +203,9 @@ class Agent_harnessing_quantize_add_send_data(Agent_harnessing_quantize):
 
 
 
+class Agent_harnessing_quantize_add_send_data_shuron_ex2(Agent_harnessing_quantize_add_send_data):
 
-
+    def make_h(self,k):
+        self.h_x = self.h_x *  0.999999
+        self.h_v = self.h_v *  0.999999
+        # print(self.h_x)

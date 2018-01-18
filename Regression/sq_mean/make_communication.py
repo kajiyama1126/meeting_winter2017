@@ -52,6 +52,39 @@ class Communication:  # (頂点数，辺数，辺確率)
         return self.P
 
 
+class Circle_communication(object):
+    def __init__(self,n,w):
+        self.n = n
+        self.w = w
+    def make_circle_graph(self):
+        self.G = nx.cycle_graph(self.n)
+        self.A = np.array(nx.adjacency_matrix(self.G).todense())  # 隣接行列
+        self.weight_martix()
+
+    def weight_martix(self):
+        a = np.zeros(self.n)
+        for i in range(self.n):
+            # a[i] = copy.copy(1.0 / (nx.degree(self.G)[i] + 1.0))
+            a[i]  = self.w
+        self.P = np.zeros((self.n, self.n))  # 確率行列(重み付き)
+        for i in range(self.n):
+            for j in range(i, self.n):
+                if i != j and self.A[i][j] == 1:
+                    a_ij = min(a[i], a[j])
+                    self.P[i][j] = copy.copy(a_ij)
+                    self.P[j][i] = copy.copy(a_ij)
+
+
+                #         print(self.P)
+        for i in range(self.n):
+            sum = 0.0
+            for j in range(self.n):
+                sum += self.P[i][j]
+            self.P[i][i] = 1.0 - sum
+
+    def send_P(self):
+        return self.P
+
 if __name__ == '__main__':
     graph = Communication(10,2,0.3)
     graph.make_connected_WS_graph()
