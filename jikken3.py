@@ -1,11 +1,29 @@
 import numpy as np
 import copy
-J = np.array([[0.8,1,0],
-             [0,0.85,1],
-             [0,0,0.9]])
+import matplotlib.pyplot as plt
 
-J1 = copy.copy(J)
-n=200
-for i in range(n):
-    J1 = np.dot(J1,J)
-    print(J1)
+
+def h(k):
+    return 0.98**k
+
+def G(k):
+    return 0.95**k
+
+def Sum(k):
+    sum = 0
+    for i in range(k):
+        sum += G(k-i)*h(i)
+    return sum
+# print(Sum(1000))
+y = []
+z = []
+iteration = 10000
+for i in range(iteration):
+    x = Sum(i)
+    y.append(x)
+    z.append(x/h(i+1))
+plt.plot(y)
+plt.yscale('log')
+plt.show()
+plt.plot(z)
+plt.show()
