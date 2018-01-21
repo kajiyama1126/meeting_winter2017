@@ -80,6 +80,7 @@ class Agent_harnessing_quantize(Agent_harnessing):
         self.h_x = self.h_x * 0.99
         self.h_v = self.h_v * 0.99
 
+
     def send(self, j):
         if self.weight[j] == 0:
             return None, j
@@ -110,7 +111,7 @@ class Agent_harnessing_quantize(Agent_harnessing):
         self.v_i = self.v_i + np.dot(self.weight, v) + (self.grad() - grad_bf)
 
         self.make_h(k)
-        # print(self.h_x,self.h_v)
+        print(self.h_x,self.h_v)
         # print(self.x_D,self.x_E)
 
 
@@ -126,6 +127,7 @@ class Encoder(object):
 
     def x_encode(self, x_i, j, h_x):
         tmp = (x_i - self.x_E[j]) / h_x
+        print(tmp,x_i - self.x_E[j],h_x)
         self.y[j] = self.quantize(tmp)
         self.x_E[j] = h_x * self.y[j] + self.x_E[j]
 
@@ -204,8 +206,18 @@ class Agent_harnessing_quantize_add_send_data(Agent_harnessing_quantize):
 
 
 class Agent_harnessing_quantize_add_send_data_shuron_ex2(Agent_harnessing_quantize_add_send_data):
+    def __init__(self,n,m,A,b,eta,name,weight):
+        super(Agent_harnessing_quantize_add_send_data_shuron_ex2, self).__init__(n, m, A, b, eta, name, weight)
+        self.h_x=10
+        self.h_v=4
+
+    def initial_state(self):
+        self.x_i = np.zeros(self.m)
+        self.x = np.zeros([self.n, self.m])
+        self.v_i = self.grad()
+        self.v = np.zeros([self.n, self.m])
 
     def make_h(self,k):
-        self.h_x = self.h_x *  0.999999
-        self.h_v = self.h_v *  0.999999
+        self.h_x = self.h_x *  0.98
+        self.h_v = self.h_v *  0.98
         # print(self.h_x)
