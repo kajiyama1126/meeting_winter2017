@@ -2,29 +2,30 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sympy import Matrix
 import sys
-from Regression.Non_strongly.non_convex_agent import Agent_harnessing_quantize_add_send_data
-from agent.agent import Agent_harnessing_quantize_add_send_data_shuron_ex2 as Agent_ex2
-from Regression.sq_mean.make_communication import Circle_communication
 
-# test = False
-test = True
+from Regression.shuron_jikken2.shuron_jikken2_agent import Agent_harnessing_quantize_add_send_data_shuron_jikken2 as Agent_jikken2
+from Regression.shuron_jikken2.shuron_jikken2_agent import Agent_YiHong14
+from Regression.shuron_jikken2.make_communication import Circle_communication
+
+test = False
+# test = True
 n = 4
-m = 3
-iteration = 1000
-C_eta = 0.0155
+m = 2
+iteration = 100000
+C_eta = 0.01
 
 alpha = 1
 beta = 1
 
-delta_ast = 3**0.5
-delta_v = 2*beta * delta_ast
+delta_ast = 1.1
+delta_v = 1.1
 delta_x = 0
 
-mu_x = 0.98
+mu_x = 0.99997
 h_0 = 10
-C_h = 0.4
+C_h = 0.5
 
-w = 0.05
+w = 0.0005
 d_hat = 2
 Graph = Circle_communication(n,w)
 Graph.make_circle_graph()
@@ -33,10 +34,10 @@ Weight_matrix = Graph.send_P()
 Peron_matrix = Weight_matrix- (1/n)*np.ones([n,n])
 
 sigma1 = np.linalg.norm(Peron_matrix, 2)
-sigma = (1-w/(4*n**2))
+# sigma = (1-w/(4*n**2))
 # eta = alpha *w *C_eta /(4*n**4 * beta**2)
-eta = alpha * C_eta /(n**2 * beta**2)*(1-sigma1)
-print('eta',eta)
+# eta = alpha * C_eta /(n**2 * beta**2)*(1-sigma1)
+# print('eta',eta)
 # cc = (2+2**0.5)/4
 
 condition = w/(4*n**2)-w*C_eta/(n**4) * (alpha/beta)**0.5*(5**0.5+2**0.5+1)/8 -2**0.5*w*(d_hat*C_eta)**0.5/n**2
@@ -47,9 +48,10 @@ else:
     print(condition)
     pass
 
-print('sigma',sigma)
+# print('sigma',sigma)
 print('sigma1',sigma1)
 sigma = sigma1
+eta = 0.0001
 # rho = max(1 - alpha * eta / 2, sigma + 5 * ((eta * beta) ** 0.5) * ((beta / alpha) ** 0.5))
 
 G = np.array([[sigma + beta * eta, beta * (beta * eta + 2*d_hat*w), eta * beta * beta], [eta, sigma, 0],
@@ -65,7 +67,7 @@ P_inv = np.linalg.inv(P)
 C_P = np.linalg.norm(P, 2) * np.linalg.norm(P_inv, 2)
 print('C_P',C_P)
 G_eig,G_eigen_vec = np.linalg.eig(G)
-rho = G_eig[0]
+rho = max(G_eig)
 print('mu_x',mu_x)
 print('rho',rho)
 print('eigen_vec',p)
@@ -98,7 +100,13 @@ Agents = []
 sumf_list = []
 for i in range(n):
     A = np.identity(m)
-    b = np.array([-1,0,1]) + 0.05 *np.random.randn(3)
+    b= np.array([-1,1]) + 0.1*np.random.rand(2)
+    # if i == 0 or i ==1:
+    #     b = np.array([-1,1,1])
+    # elif i == 2:
+    #     b =  np.array([1,0,-1])
+    # elif i ==3:
+    #     b = np.array([3, 1, -3])
     B.append(b)
     # Agents.append(Agent_harnessing_nonconvex(n, m,A ,b , eta, i, Weight_matrix[i]))
     Agents.append(Agent_ex2(n, m, A, b, eta, i, Weight_matrix[i]))
