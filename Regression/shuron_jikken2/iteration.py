@@ -9,7 +9,7 @@ from Regression.shuron_jikken1_nonstrongly.make_communication import Communicati
 from Regression.shuron_jikken1_nonstrongly.problem import Problem
 
 
-class Iteration_multi_nonstrongly(object):
+class Iteration_multi_jikken2(object):
     def __init__(self, n, m, eta,  pattern,count):
         """
         :param n: int
@@ -35,7 +35,7 @@ class Iteration_multi_nonstrongly(object):
             # send_y_data = [[] for i in range(self.pattern)]
             # send_z_data = [[] for i in range(self.pattern)]
             for i in range(self.pattern):
-                iterate_count[i].append(self.iteration(i,stop_condition=0.02))
+                iterate_count[i].append(self.iteration(i,stop_condition=0.001))
 
         return iterate_count
 
@@ -93,8 +93,6 @@ class Iteration_multi_nonstrongly(object):
         weight_graph.make_connected_WS_graph()
         P = weight_graph.P
         P_history = []
-        self.sigma = np.linalg.norm(P-1/self.n* np.ones([self.n,self.n]),2)
-        print(self.sigma)
         for k in range(self.iterate):  # 通信グラフを作成＆保存
             # weight_graph.make_connected_WS_graph()
             P_history.append(weight_graph.P)
@@ -102,7 +100,7 @@ class Iteration_multi_nonstrongly(object):
 
     def make_agent(self, pattern):
         Agents = []
-        eta = (1-self.sigma)**2/self.eta[pattern]
+        eta = self.eta[pattern]
         I = np.identity(self.m)
         for i in range(self.n):
             if pattern < self.pattern/2:
@@ -154,7 +152,7 @@ class Iteration_multi_nonstrongly(object):
             # if k==0:
             #     error_ini = error
             # print(error)
-            if error < stop_condition:
+            if error/error_ini < stop_condition:
                 return k
 
         print('Nostop')
@@ -178,9 +176,9 @@ class Iteration_multi_nonstrongly(object):
 
         return f_opt
 
-class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
+class Iteration_multi_jikken2_graph(Iteration_multi_jikken2):
     def __init__(self, n, m, eta,  pattern,count):
-        super(Iteration_multi_nonstrongly_graph, self).__init__(n, m, eta, pattern, count=1)
+        super(Iteration_multi_jikken2_graph, self).__init__(n, m, eta, pattern, count=1)
 
 
     def main(self):
@@ -195,7 +193,7 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
             # send_y_data = [[] for i in range(self.pattern)]
             # send_z_data = [[] for i in range(self.pattern)]
             for i in range(self.pattern):
-                cont , graph,ydata_zdata = self.iteration(i, stop_condition=0.02)
+                cont , graph,ydata_zdata = self.iteration(i, stop_condition=0.001)
                 iterate_count[i].append(cont)
                 iterate_graph[i] = graph
                 if i < self.pattern/2:
@@ -212,15 +210,15 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
         for i in range(self.pattern):
             if i < self.pattern/2:
                 stepsize = ' $\eta=$' + str(self.eta[i])
-                plt.plot(iterate_graph[i], label=label[0] , linestyle=line[0], linewidth=2)
+                plt.plot(iterate_graph[i], label=label[0] + stepsize, linestyle=line[0], linewidth=2)
             else:
                 stepsize = ' $\eta=$' + str(self.eta[i])
-                plt.plot(iterate_graph[i], label=label[1] , linestyle=line[1], linewidth=2)
+                plt.plot(iterate_graph[i], label=label[1] + stepsize, linestyle=line[1], linewidth=2)
 
         plt.legend()
         plt.yscale('log')
         plt.xlabel('iteration $k$', fontsize=10)
-        plt.ylabel('$max_{i} f(\hat{x}_i(k))-f^*$', fontsize=10)
+        plt.ylabel('$max_{i}$ $f(x_i(k))-f^*$', fontsize=10)
         plt.show()
 
         for i in range(self.pattern):
@@ -276,8 +274,8 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
             # if k==0:
             #     error_ini = error
             # print(error)
-            self.f_error_history.append(error)
-            if error < stop_condition:
+            self.f_error_history.append(error/error_ini)
+            if error/error_ini < stop_condition:
                 if pattern >= int(self.pattern/2):
                     # print(Agents[0].send_y_data_zdata())
                     return k,self.f_error_history,Agents[0].send_y_data_zdata()

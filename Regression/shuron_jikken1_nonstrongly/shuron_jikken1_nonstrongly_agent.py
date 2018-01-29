@@ -113,6 +113,12 @@ class  Agent_harnessing_nonstrongly(Agent_harnessing):
         super(Agent_harnessing_nonstrongly, self).__init__(n, m, A, b, eta, name, weight)
         self.x_i_hat = 0
 
+    def initial_state(self):
+        self.x_i = self.b
+        self.x = np.zeros([self.n, self.m])
+        self.v_i = self.grad()
+        self.v = np.zeros([self.n, self.m])
+
     def grad(self):
         if np.linalg.norm(self.x_i-self.b) <= 1:
             return (self.x_i-self.b) ** 3
@@ -127,7 +133,7 @@ class  Agent_harnessing_nonstrongly(Agent_harnessing):
         self.x_i = np.dot(self.weight, self.x) - self.eta * self.v_i
         self.v_i = np.dot(self.weight, self.v) + (self.grad() - grad_bf)
 
-        self.x_i_hat = 1/(k+1) * self.x_i + k/(k+1)*self.x_i_hat
+        self.x_i_hat = 1./(k+1) * self.x_i + k/(k+1)*self.x_i_hat
 
 class Agent_harnessing_nonstrongly_quantize_add_send_data(Agent_harnessing_nonstrongly, Agent_harnessing_quantize_add_send_data):
     def __init__(self,n,m,A,b,eta,name,weight):
@@ -135,8 +141,8 @@ class Agent_harnessing_nonstrongly_quantize_add_send_data(Agent_harnessing_nonst
         self.x_i_hat = 0
 
     def make_h(self,k):
-        self.h_x = 0.0000001/(k+1)
-        self.h_v = 0.0000001
+        self.h_x = 1./(k+1)
+        self.h_v = 1./(k+1)
         # self.h_v = 0.1/(k+1)
 
     def update(self, k):

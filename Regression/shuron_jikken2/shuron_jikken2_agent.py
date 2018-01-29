@@ -4,22 +4,27 @@ import numpy as np
 class Agent_YiHong14(Agent):
 
     def s(self, k):
-        return 1 / (k + 1)
+        return 1000 / (k + 100)
 
     def grad(self):
         A_to = self.A.T
         grad = np.dot(A_to, (np.dot(self.A, self.x_i) - self.b))
         return grad
 
-    def __init__(self, n, m, A, b, eta, name, weight):
-        super(Agent_YiHong14, self).__init__(n, m, A, b, eta, name, weight)
+    def __init__(self, n, m, A, b, name, weight,w_2):
+        super(Agent_YiHong14, self).__init__(n, m, A, b,  name, weight)
         # self.s = s
-        self.Encoder = Encoder(self.n, self.m)
-        self.Decoder = Decoder(self.n, self.m)
+        self.Encoder = Yi_Encoder(self.n, self.m)
+        self.Decoder = Yi_Decoder(self.n, self.m)
         self.x_E = np.zeros([n, m])
         self.x_D = np.zeros([n, m])
         self.clock = 0
-        self.w = self.make_w()
+        self.w = w_2
+        self.send_max_y_data = [[[] for j in range(self.m)]  for i in range(self.n)]
+
+    def initial_state(self):
+        self.x_i = np.zeros(self.m)
+        self.x = np.zeros([self.n, self.m])
 
     def make_w(self):
         count = len(self.weight)
@@ -31,12 +36,16 @@ class Agent_YiHong14(Agent):
             else:
                 np.delete(self.weight, np.argmin(self.weight))
 
+
     def send(self, j):
         if self.weight[j] == 0:
             return None, j
         else:
             self.Encoder.x_encode(self.x_i, j, self.s(self.clock))
             state, name = self.Encoder.send_y_z(j, self.name)
+            if self.weight[j] != 0:
+                for i in range(self.m):
+                    self.send_max_y_data[j][i].append(state[i])
             return state, name
 
     def receive(self, x_j, name):
@@ -52,11 +61,12 @@ class Agent_YiHong14(Agent):
         x = self.x_D - self.x_E
         x[self.name] = np.zeros(self.m)
 
-        self.x_i = self.x_i + self.w * (np.dot(self.weight, x)) - self.s(k) * self.grad()
+        self.x_i = self.x_i +  (np.dot(self.weight, x)) - self.w*self.s(k) * self.grad()
         self.clock += 1
 
-
-class Encoder(object):
+    def send_y_data_zdata(self):
+        return self.send_max_y_data, None
+class Yi_Encoder(object):
     def __init__(self, n, m):
         self.n = n
         self.m = m
@@ -88,7 +98,7 @@ class Encoder(object):
         return tmp
 
 
-class Decoder(object):
+class Yi_Decoder(object):
     def __init__(self, n, m):
         self.n = n
         self.m = m
@@ -109,10 +119,13 @@ class Decoder(object):
 
 
 class Agent_harnessing_quantize_add_send_data_shuron_jikken2(Agent_harnessing_quantize_add_send_data):
-    def __init__(self,n,m,A,b,eta,name,weight):
+    def __init__(self,n,m,A,b,eta,name,weight,mu_x,C_h,h_0):
         super(Agent_harnessing_quantize_add_send_data_shuron_jikken2, self).__init__(n, m, A, b, eta, name, weight)
-        self.h_x=10
-        self.h_v=1/0.4 * self.h_x
+        self.h_x=h_0
+        self.h_v=1./C_h* self.h_x
+        self.mu_x = mu_x
+        self.send_max_y_data = [[[] for j in range(self.m)]  for i in range(self.n)]
+        self.send_max_z_data = [[[] for j in range(self.m)] for i in range(self.n)]
 
     def initial_state(self):
         self.x_i = np.zeros(self.m)
@@ -121,6 +134,23 @@ class Agent_harnessing_quantize_add_send_data_shuron_jikken2(Agent_harnessing_qu
         self.v = np.zeros([self.n, self.m])
 
     def make_h(self,k):
-        self.h_x = self.h_x *  0.9999
-        self.h_v = self.h_v *  0.9999
+        self.h_x = self.h_x *  self.mu_x
+        self.h_v = self.h_v *  self.mu_x
         # print(self.h_x)
+
+
+    def send(self, j):
+        if self.weight[j] == 0:
+            return None, j
+        else:
+            self.Encoder.x_encode(self.x_i, j, self.h_x)
+            self.Encoder.v_encode(self.v_i, j, self.h_v)
+            state, name = self.Encoder.send_y_z(j, self.name)
+            if self.weight[j] != 0:
+                for i in range(self.m):
+                    self.send_max_y_data[j][i].append(state[0][i])
+                    self.send_max_z_data[j][i].append(state[1][i])
+            # else:
+            #     self.send_max_y_data[j].append(None)
+            #     self.send_max_z_data[j].append(None)
+            return state, name

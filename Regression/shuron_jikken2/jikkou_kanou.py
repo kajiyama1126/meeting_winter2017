@@ -7,15 +7,12 @@ from Regression.shuron_jikken2.shuron_jikken2_agent import Agent_harnessing_quan
 from Regression.shuron_jikken2.shuron_jikken2_agent import Agent_YiHong14
 from Regression.shuron_jikken2.make_communication import Circle_communication
 from agent.agent import Agent_harnessing
-np.random.seed(0)
-
 test = False
 # test = True
 n = 4
 m = 2
-
-iteration = 200000
-patterns = 2
+iteration = 2000
+patterns = 1
 
 alpha = 1
 beta = 1
@@ -24,13 +21,10 @@ delta_ast = (1.5**2 + 1.5**2)**0.5 *n**0.5
 delta_v = (1**2+1**2)**0.5
 delta_x = 0
 
-C_x0 = 0
-C_v0 = 1.5
-
 mu_x = 0.99993
 h_0 = 10
 C_h = 0.45
-w = 0.00075
+w = 0.0005
 d_hat = 2
 Graph = Circle_communication(n,w)
 Graph.make_circle_graph()
@@ -44,7 +38,7 @@ sigma = np.linalg.norm(Peron_matrix, 2)
 # print('sigma',sigma)
 print('sigma',sigma)
 
-eta = 0.0003
+eta = 0.0002
 
 
 n_w =(n-1)/n
@@ -79,45 +73,23 @@ print(d_hat * w,2*eta*beta,eta)
 # upper_w = np.max(Weight_matrix)
 w=w
 C_1 =C_P * C_theta * ((delta_v**2 + delta_x**2 + delta_ast**2))**0.5
-Gamma_x = (C_P * C_theta * d_hat * w * (m * n * ((beta+1./C_h)** 2+1)) ** 0.5) / (mu_x - rho)
+Gamma_x = (C_P * C_theta * d_hat * w * (m * n * ((beta** 2+1))) ** 0.5) / (mu_x - rho)
+Gamma_v = (C_P * C_theta * d_hat * w * (m * n) ** 0.5) / (mu_x - rho)
 C_x = (2*d_hat * w*n_w +  2*eta * beta * ((1/n) ** 0.5 )+ eta)
 C_v = (2*d_hat * w*n_w * beta * m ** 0.5 + (2 * eta * beta ** 2)*(m/n)**0.5 + 2*d_hat * w *n_w+ eta * beta * m ** 0.5)
-ell_x = C_x * (C_1/(mu_x * h_0) + Gamma_x/(mu_x)  ) + (2 * d_hat * w*n_w + 1) / (2 * mu_x) - 1 / 2
-ell_v= C_v * (C_1*C_h/(mu_x * h_0) + C_h*Gamma_x/(mu_x) ) + (m ** 0.5 * d_hat * beta * w * C_h) / mu_x + (2 * d_hat * w + 1) / (2 * mu_x) - 1 / 2
+ell_x = C_x * (C_1/(mu_x * h_0) + Gamma_x/(mu_x) + Gamma_v/(C_h*mu_x)) + (2 * d_hat * w*n_w + 1) / (2 * mu_x) - 1 / 2
+ell_v= C_v * (C_1*C_h/(mu_x * h_0) + C_h*Gamma_x/(mu_x) + Gamma_v/(mu_x)) + (m ** 0.5 * d_hat * beta * w * C_h) / mu_x + (2 * d_hat * w + 1) / (2 * mu_x) - 1 / 2
 
-print('ell_x0',C_x0/h_0 -1/2,'ell_v0',C_v0/h_0 -1/2)
-print('ell_x',ell_x,'ell_v',ell_v)
 
-# if test is True:
-#     sys.exit()
-
-w_2 = 0.0125
-gamma = 0.99
-C_g = 1.5
+w_2 = 0.004
 Graph_2 = Circle_communication(n,w_2)
 Graph_2.make_circle_graph()
-Weight_matrix_2 = Graph_2.send_P()
-Laplacian_matrix = Graph_2.send_L()
-print(Weight_matrix_2,Laplacian_matrix)
-l_2,p_2 = np.linalg.eig(Laplacian_matrix)
+Weight_matrix_2 = Graph.send_P()
+print(Weight_matrix_2)
 
-l_2.sort()
-print(l_2,p_2)
+Peron_matrix_2 = Weight_matrix_2- (1/n)*np.ones([n,n])
+lamb_2 = np.linalg.norm(Peron_matrix_2, 2)
 
-# Peron_matrix_2 = Weight_matrix_2- (1/n)*np.ones([n,n])
-# lamb_2 = np.linalg.norm(Peron_matrix_2, 2)
-
-lamb_2 = l_2[1]
-lamb_n = l_2[n-1]
-rho_h = 1-w_2*lamb_2
-if gamma-rho_h<0:
-    print('error')
-print(gamma-rho_h)
-M1 = (1+w_2 * 2* d_hat)/(2*gamma) + w_2*C_g
-M2 = ((m*n)**0.5*w_2**2*lamb_n*(lamb_n + 2*gamma*C_g))/(2*gamma*(gamma-rho_h))
-M = M1+M2
-s0 =0
-print('M',M)
 
 
 
@@ -127,8 +99,8 @@ if test is True:
 
 A = None
 B = []
-
-
+Agents = []
+sumf_list = []
 for i in range(n):
     A = np.identity(m)
     b= np.array([-1.5,0.5]) + 1.0*np.random.rand(2)
@@ -148,21 +120,14 @@ f_opt = 0
 for i in range(n):
     f_opt += 1/2*np.linalg.norm(ave_b-B[i],2)**2
 print(ave_b)
-
-ydata_set = []
-zdata_set = []
-
-
 for pattern in range(patterns):
-    Agents = []
-    sumf_list = []
     prog = ProgressBar(max_value=iteration)
     for i in range(n):
-        if pattern < int(patterns)/2:
+        if pattern < int(patterns):
             # Agents.append(Agent_harnessing(n, m, A, B[i], eta, i, Weight_matrix[i]))
             Agents.append(Agent_jikken2(n, m, A, B[i], eta, i, Weight_matrix[i],mu_x,C_h,h_0))
-        else:
-            Agents.append(Agent_YiHong14(n, m, A, B[i],  i, Weight_matrix_2[i],w_2))
+        # else:
+        #     # Agents.append(Agent_YiHong14(n, m, A, b, eta, i, Weight_matrix[i]))
 
 
     for k in range(iteration):
@@ -195,22 +160,11 @@ for pattern in range(patterns):
     for i in range(n):
         print(Agents[i].x_i)
 
-    dim_label = ['Proposed algorithm', 'Prior algorithm']
-    plt.plot(sumf_list,label=dim_label[pattern])
+    plt.plot(sumf_list)
     plt.yscale('log')
-    plt.xlabel('iteration $k$')
-    plt.ylabel('$max_{i} f(x_i(k))-f^*$', fontsize=10)
+    plt.show()
+
     y_data, z_data = Agents[0].send_y_data_zdata()
-    ydata_set.append(y_data)
-    zdata_set.append(z_data)
-
-plt.legend()
-plt.show()
-
-
-for pattern in range(patterns):
-    y_data=ydata_set[pattern]
-    z_data=zdata_set[pattern]
 
     for i in range(n):
         if y_data[i][0] == []:
@@ -218,21 +172,12 @@ for pattern in range(patterns):
         else:
             dim_label = ['1','2']
             for j in range(m):
-                plt.plot(y_data[i][j], 'o' ,markersize=4)
-                plt.xlabel('iteration $k$')
-                plt.ylabel('$y_{ij}^'+dim_label[j]+'$',fontsize=10)
-                plt.legend()
-                plt.show()
+                plt.plot(y_data[i][j], 'o' ,label='$||y_{ij}||_\infty$' + dim_label[j],markersize=4)
                 # plt.legend()
                 # plt.show()
-                if z_data is not None:
-                    plt.plot(z_data[i][j], 'o',markersize=4)
-                    plt.xlabel('iteration $k$')
-                    plt.ylabel('$z_{ij}^'+dim_label[j]+'$',fontsize=10)
-                    plt.legend()
-                    plt.show()
-            break
-    # plt.legend()
-    # plt.show()
+                plt.plot(z_data[i][j], 'o',label='$||z_{ij}||_\infty$'+ dim_label[j],markersize=4)
+            plt.legend()
+            plt.show()
+        break
     # plt.legend()
     # plt.show()

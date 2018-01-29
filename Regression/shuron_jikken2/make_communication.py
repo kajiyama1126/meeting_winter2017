@@ -58,6 +58,7 @@ class Circle_communication(object):
         self.w = w
     def make_circle_graph(self):
         self.G = nx.cycle_graph(self.n)
+        self.D = 2*np.identity(self.n)
         self.A = np.array(nx.adjacency_matrix(self.G).todense())  # 隣接行列
         self.weight_martix()
 
@@ -84,6 +85,9 @@ class Circle_communication(object):
 
     def send_P(self):
         return self.P
+
+    def send_L(self):
+        return self.D-self.A
 
 if __name__ == '__main__':
     graph = Communication(10,2,0.3)
