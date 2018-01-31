@@ -357,6 +357,7 @@ class Iteration_multi_graph(Iteration_multi):
         for i in range(self.pattern):
             if i < self.pattern/2:
                 stepsize = ' $\eta=$' + str(self.eta[i])
+
                 plt.plot(iterate_graph[i], label=label[0] + stepsize, linestyle=line[0], linewidth=2)
             else:
                 stepsize = ' $\eta=$' + str(self.eta[i])
