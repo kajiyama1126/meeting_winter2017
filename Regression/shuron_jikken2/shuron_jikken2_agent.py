@@ -141,7 +141,7 @@ class Agent_harnessing_quantize_add_send_data_shuron_jikken2(Agent_harnessing_qu
 
     def send(self, j):
         if self.weight[j] == 0:
-            return None, j
+            return None, self.name
         else:
             self.Encoder.x_encode(self.x_i, j, self.h_x)
             self.Encoder.v_encode(self.v_i, j, self.h_v)

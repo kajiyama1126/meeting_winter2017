@@ -142,7 +142,7 @@ class Agent_harnessing_nonstrongly_quantize_add_send_data(Agent_harnessing_nonst
 
     def make_h(self,k):
         self.h_x = 1./(k+1)
-        self.h_v = 1./(k+1)
+        self.h_v = 0.1
         # self.h_v = 0.1/(k+1)
 
     def update(self, k):

@@ -206,7 +206,7 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
                     iterate_zdata[i]= ydata_zdata[1]
 
 
-        label = ['Not Quantize', 'Quantize']
+        label = ['[20]', 'Proposed']
         line = ['-', '-.']
 
         for i in range(self.pattern):
@@ -219,8 +219,8 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
 
         plt.legend()
         plt.yscale('log')
-        plt.xlabel('iteration $k$', fontsize=10)
-        plt.ylabel('$max_{i} f(\hat{x}_i(k))-f^*$', fontsize=10)
+        plt.xlabel('iteration $k$', fontsize=16)
+        plt.ylabel('$max_{i}$ $f(\hat{x}_i(k))-f^*$', fontsize=16)
         plt.show()
 
         for i in range(self.pattern):
@@ -229,8 +229,8 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
                     if iterate_ydata[i][j] !=[]:
                         plt.plot(iterate_ydata[i][j],'o',label='$||y_{ij}||_\infty$',markersize=4)
                         plt.plot(iterate_zdata[i][j],'o',label='$||z_{ij}||_\infty$',markersize=4)
-                        plt.xlabel('iteration $k$')
-                        plt.ylabel('$||y_{ij}||_\infty$, $||z_{ij}||_\infty$')
+                        plt.xlabel('iteration $k$',fontsize=16)
+                        plt.ylabel('$||y_{ij}||_\infty$, $||z_{ij}||_\infty$',fontsize=16)
                         plt.legend()
                         plt.show()
                         break

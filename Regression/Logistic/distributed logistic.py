@@ -34,6 +34,7 @@ m = 3
 size = int(100/n)
 eta = 0.10
 iteration = 550
+save_iteration = 1
 
 iris = datasets.load_iris()
 X1 = iris.data[:100, :(m - 1)]  # we only take the first two features.
@@ -70,10 +71,11 @@ for k in range(iteration):
     # x_ax = [[i for j in range(n)] for i in range(10)]
     x1 = [[]for i in range(n)]
     im = plt.plot()
-    for i in range(n):
-        x1[i] = (Agents[i].x_i[0] * x0[i] + Agents[i].x_i[2]) / (-Agents[i].x_i[1])
-        im += plt.plot(x0[i], x1[i])
-    ims.append(im)
+    if k % int(save_iteration) == 0:
+        for i in range(n):
+            x1[i] = (Agents[i].x_i[0] * x0[i] + Agents[i].x_i[2]) / (-Agents[i].x_i[1])
+            im += plt.plot(x0[i], x1[i])
+        ims.append(im)
     print(k)
 for i in range(n):
     print(Agents[i].x_i)
@@ -99,6 +101,6 @@ plt.ylabel('Sepal width')
 # plt.legend()
 
 # fig.legend()
-ani.save(filename='hoge.mp4')
+ani.save(filename='hoge3.gif', writer="imagemagick")
 print('save完了')
 plt.show()
