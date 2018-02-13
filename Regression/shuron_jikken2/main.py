@@ -221,9 +221,10 @@ for pattern in range(patterns):
     dim_label = ['Proposed', '[26]']
     plt.plot(sumf_list, label=dim_label[pattern])
     plt.yscale('log')
-    plt.gca().yaxis.set_minor_locator(tick.MultipleLocator(0.1))
+
     plt.grid(which='major', color='black', linestyle='-')
-    plt.grid(which='minor', color='gray', linestyle=':')
+    plt.grid(which='minor', color='gray', linestyle=':',axis='y')
+    plt.minorticks_on()
     plt.xlabel('iteration $k$', fontsize=14)
     plt.ylabel('$max_{i} f(x_i(k))-f^*$', fontsize=14)
     y_data, z_data = Agents[0].send_y_data_zdata()

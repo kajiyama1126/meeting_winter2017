@@ -8,6 +8,7 @@ from Regression.shuron_jikken1_nonstrongly.shuron_jikken1_nonstrongly_agent impo
 from Regression.shuron_jikken1_nonstrongly.make_communication import Communication
 from Regression.shuron_jikken1_nonstrongly.problem import Problem
 
+stop_condition = 0.025
 
 class Iteration_multi_nonstrongly(object):
     def __init__(self, n, m, eta,  pattern,count):
@@ -35,7 +36,7 @@ class Iteration_multi_nonstrongly(object):
             # send_y_data = [[] for i in range(self.pattern)]
             # send_z_data = [[] for i in range(self.pattern)]
             for i in range(self.pattern):
-                iterate_count[i].append(self.iteration(i,stop_condition=0.02))
+                iterate_count[i].append(self.iteration(i,stop_condition=stop_condition))
 
         return iterate_count
 
@@ -89,7 +90,7 @@ class Iteration_multi_nonstrongly(object):
     #     return
 
     def make_communication_graph(self):  # 通信グラフを作成＆保存
-        weight_graph = Communication(self.n, 4, 0.3)
+        weight_graph = Communication(self.n, 6, 0.3)
         weight_graph.make_connected_WS_graph()
         P = weight_graph.P
         P_history = []
@@ -154,7 +155,8 @@ class Iteration_multi_nonstrongly(object):
             # if k==0:
             #     error_ini = error
             # print(error)
-            if error < stop_condition:
+            # print(error/error_ini)
+            if error/error_ini< stop_condition:
                 return k
 
         print('Nostop')
@@ -171,10 +173,11 @@ class Iteration_multi_nonstrongly(object):
     def optimal_value(self, x_i):
         f_opt = 0
         for i in range(self.n):
-            if np.linalg.norm(x_i-self.b_num[i],2)<=1:
-                f_opt += 1/4 * np.linalg.norm(x_i-self.b_num[i],2)**4
-            else:
-                f_opt += np.linalg.norm(x_i-self.b_num[i])-3/4
+            for j in range(self.m):
+                if abs(x_i[j]-self.b_num[i][j])<=1:
+                    f_opt += 1/4 * (x_i[j]-self.b_num[i][j])**4
+                else:
+                    f_opt += abs(x_i[j]-self.b_num[i][j])-3/4
 
         return f_opt
 
@@ -195,7 +198,7 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
             # send_y_data = [[] for i in range(self.pattern)]
             # send_z_data = [[] for i in range(self.pattern)]
             for i in range(self.pattern):
-                cont , graph,ydata_zdata = self.iteration(i, stop_condition=0.02)
+                cont , graph,ydata_zdata = self.iteration(i, stop_condition=stop_condition)
                 iterate_count[i].append(cont)
                 iterate_graph[i] = graph
                 if i < self.pattern/2:
@@ -275,7 +278,7 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
             error = np.max(f_value) - self.f_opt
             # if k==0:
             #     error_ini = error
-            # print(error)
+            print(error)
             self.f_error_history.append(error)
             if error < stop_condition:
                 if pattern >= int(self.pattern/2):

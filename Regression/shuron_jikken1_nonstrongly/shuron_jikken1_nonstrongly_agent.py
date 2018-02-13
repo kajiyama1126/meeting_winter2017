@@ -1,6 +1,6 @@
 from agent.agent import Agent,Agent_harnessing_quantize_add_send_data,Agent_harnessing
 import numpy as np
-
+import copy
 class Agent_YiHong14(Agent):
 
     def s(self, k):
@@ -114,17 +114,25 @@ class  Agent_harnessing_nonstrongly(Agent_harnessing):
         self.x_i_hat = 0
 
     def initial_state(self):
-        self.x_i = self.b
+        # self.x_i = self.b
+        self.x_i = np.random.randn(self.m)
         self.x = np.zeros([self.n, self.m])
         self.v_i = self.grad()
         self.v = np.zeros([self.n, self.m])
 
     def grad(self):
-        if np.linalg.norm(self.x_i-self.b) <= 1:
-            return (self.x_i-self.b) ** 3
+        grad = copy.copy(self.x_i)
+        # grad_sign = np.sign(grad)
+        for i in range(len(grad)):
+            tmp = abs(self.x_i[i]-self.b[i])
+            if tmp <= 1:
+                grad[i] = (self.x_i[i]-self.b[i])**3
+                tmp3 = np.dot(tmp,np.dot(tmp,tmp))
+                # return tmp3
+            else:
+                grad[i] = np.sign(self.x_i[i]-self.b[i])
 
-        else:
-            return np.sign(self.x_i-self.b)
+        return grad
 
     def update(self, k):
         self.x[self.name] = self.x_i
@@ -141,8 +149,8 @@ class Agent_harnessing_nonstrongly_quantize_add_send_data(Agent_harnessing_nonst
         self.x_i_hat = 0
 
     def make_h(self,k):
-        self.h_x = 1./(k+1)
-        self.h_v = 0.1
+        self.h_x = 10/(k+1)
+        self.h_v = 1.0
         # self.h_v = 0.1/(k+1)
 
     def update(self, k):

@@ -16,7 +16,8 @@ class Problem(object):
         self.x = cvx.Variable(m)
         obj = cvx.Minimize(0)
         for i in range(n):
-            obj += cvx.Minimize(1 / 4 * cvx.power(cvx.norm((self.A[i]*self.x - self.b[i]), 2), 4))
+            for j in range(m):
+                obj += cvx.Minimize(1 / 4 * cvx.power(cvx.norm((self.x[j] - self.b[i][j]), 2), 4))
         self.prob = cvx.Problem(obj)
         self.prob.solve(verbose=False,abstol=1.0e-10,feastol=1.0e-10)
         print(self.prob.status, self.x.value)

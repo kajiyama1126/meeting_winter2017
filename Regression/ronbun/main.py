@@ -18,7 +18,7 @@ test_sub = True
 n = 4
 m = 2
 
-iteration = 200000
+iteration = 2000
 patterns = 2
 
 alpha = 1
@@ -123,6 +123,8 @@ M = M1+M2
 s0 =0
 print('M',M)
 
+rho = 0.01
+resol = 3
 
 
 if test_sub is False:
@@ -141,19 +143,26 @@ for i in range(n):
 
 Sol = Solver(n,m,A,b)
 f_opt,x_opt = Sol.send_opt()
-# Method = ['Proposed','Subgrad','ADMM']
-Method = ['Subgrad']
+Method = ['Proposed','Subgrad','ADMM']
+# Method = ['Proposed','Subgrad']
+Result_data = {}
+# Method = ['Subgrad']
 for algo in Method:
     if algo == 'Proposed':
-        other_param = (1,1,1,1)
+        other_param = (eta,mu_x,C_h,h_0)
     elif algo == 'Subgrad':
         other_param = None
+    elif algo == 'ADMM':
+        other_param = (rho,resol)
+
     D_sol = Distributed_solver(n,m,A,b,Weight_matrix,algo,iteration,other_param)
     D_sol.Make_agent()
     result = D_sol.Iteration(f_opt)
-
-plt.plot(result)
+    Result_data[algo] = result
+for algo in Method:
+    plt.plot(Result_data[algo],label = algo)
 plt.yscale('log')
+plt.legend()
 plt.show()
 
 

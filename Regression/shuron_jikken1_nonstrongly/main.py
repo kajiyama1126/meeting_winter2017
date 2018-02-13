@@ -3,8 +3,8 @@ import numpy as np
 # from Regression.sq_mean.iteration import Iteration,
 from Regression.shuron_jikken1_nonstrongly.iteration import Iteration_multi_nonstrongly,Iteration_multi_nonstrongly_graph
 
-n = 100
-m = 1
+n = 20
+m = 20
 np.random.seed(0)  # ランダム値固定
 
 count = 10
