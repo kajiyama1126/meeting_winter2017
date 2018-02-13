@@ -278,9 +278,9 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
             error = np.max(f_value) - self.f_opt
             # if k==0:
             #     error_ini = error
-            print(error)
+            # print(error)
             self.f_error_history.append(error)
-            if error < stop_condition:
+            if error/error_ini < stop_condition:
                 if pattern >= int(self.pattern/2):
                     # print(Agents[0].send_y_data_zdata())
                     return k,self.f_error_history,Agents[0].send_y_data_zdata()

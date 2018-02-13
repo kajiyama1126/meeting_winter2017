@@ -3,9 +3,9 @@ import numpy as np
 # from Regression.sq_mean.iteration import Iteration,
 from Regression.shuron_jikken1_nonstrongly.iteration import Iteration_multi_nonstrongly,Iteration_multi_nonstrongly_graph
 
-n = 20
+n = 25
 m = 20
-np.random.seed(0)  # ランダム値固定
+np.random.seed(1)  # ランダム値固定
 
 count = 10
 
@@ -20,12 +20,12 @@ if pattern != len(eta):
 else:
     eta = np.reshape(eta, -1)
     #複数回用
-    program = Iteration_multi_nonstrongly(n,m,eta,pattern,count)
-    iteration_count = program.main()
+    # program = Iteration_multi_nonstrongly(n,m,eta,pattern,count)
+    # iteration_count = program.main()
 
     #一回グラフ作成用
-    # program = Iteration_multi_nonstrongly_graph(n, m, eta, pattern, count)
-    # iteration_count = program.main()
+    program = Iteration_multi_nonstrongly_graph(n, m, eta, pattern, count)
+    iteration_count = program.main()
 
     print(np.mean(iteration_count,axis=1))
 
