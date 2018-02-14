@@ -8,7 +8,7 @@ from Regression.shuron_jikken1_nonstrongly.shuron_jikken1_nonstrongly_agent impo
 from Regression.shuron_jikken1_nonstrongly.make_communication import Communication
 from Regression.shuron_jikken1_nonstrongly.problem import Problem
 
-stop_condition = 0.025
+stop_condition = 0.01
 
 class Iteration_multi_nonstrongly(object):
     def __init__(self, n, m, eta,  pattern,count):
@@ -279,7 +279,7 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
             # if k==0:
             #     error_ini = error
             # print(error)
-            self.f_error_history.append(error)
+            self.f_error_history.append(error/error_ini)
             if error/error_ini < stop_condition:
                 if pattern >= int(self.pattern/2):
                     # print(Agents[0].send_y_data_zdata())
