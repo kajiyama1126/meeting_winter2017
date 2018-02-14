@@ -8,7 +8,7 @@ from Regression.shuron_jikken1_nonstrongly.shuron_jikken1_nonstrongly_agent impo
 from Regression.shuron_jikken1_nonstrongly.make_communication import Communication
 from Regression.shuron_jikken1_nonstrongly.problem import Problem
 
-stop_condition = 0.01
+stop_condition = 0.05
 
 class Iteration_multi_nonstrongly(object):
     def __init__(self, n, m, eta,  pattern,count):

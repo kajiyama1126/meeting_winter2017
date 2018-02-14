@@ -5,7 +5,7 @@ from Regression.shuron_jikken1_nonstrongly.iteration import Iteration_multi_nons
 
 n = 10
 m = 100
-np.random.seed(0)  # ランダム値固定
+np.random.seed(1)  # ランダム値固定
 
 count = 100
 
