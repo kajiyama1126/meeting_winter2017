@@ -20,7 +20,7 @@ class Problem(object):
                 obj += cvx.Minimize(1 / 4 * cvx.power(cvx.norm((self.x[j] - self.b[i][j]), 2), 4))
         self.prob = cvx.Problem(obj)
         self.prob.solve(verbose=False,abstol=1.0e-10,feastol=1.0e-10)
-        print(self.prob.status, self.x.value)
+        # print(self.prob.status, self.x.value)
 
 
     def send_x_opt(self):

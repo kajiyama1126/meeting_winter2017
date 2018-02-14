@@ -37,7 +37,7 @@ class Iteration_multi_nonstrongly(object):
             # send_z_data = [[] for i in range(self.pattern)]
             for i in range(self.pattern):
                 iterate_count[i].append(self.iteration(i,stop_condition=stop_condition))
-
+            print(iterate_count)
         return iterate_count
 
 
@@ -224,6 +224,7 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
         plt.yscale('log')
         plt.xlabel('iteration $k$', fontsize=16)
         plt.ylabel('$max_{i}$ $f(\hat{x}_i(k))-f^*$', fontsize=16)
+
         plt.show()
 
         for i in range(self.pattern):
