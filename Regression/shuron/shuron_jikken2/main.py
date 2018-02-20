@@ -120,6 +120,7 @@ Condition_proposed(n, m, weight_matrix, w, eta, h_0, mu_x, C_h, alpha, beta, del
 if test is False:
     sys.exit()
 
+
 w_2 = 0.014
 gamma = 0.99
 C_g = 1.5

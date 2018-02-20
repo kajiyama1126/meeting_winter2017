@@ -3,15 +3,17 @@ import numpy as np
 # from Regression.sq_mean.iteration import Iteration,
 from Regression.shuron.shuron_jikken1_nonstrongly.iteration import Iteration_multi_nonstrongly,Iteration_multi_nonstrongly_graph
 
+#####################################################################################
+#設定パラメータ
 n = 10
 m = 100
 np.random.seed(4)  # ランダム値固定
-
 count = 100
+eta = [56] #複数記述可能　[x,y,z,///] eta = (1-\sigma)^2/(x,y,z)
+#####################################################################################
 
-# eta = [0.003,0.005,0.01,0.015,0.02,0.003,0.005,0.01,0.015,0.02]
-# eta = [0.01,0.02,0.05,0.01,0.02,0.05]
-eta = [56,56]
+eta = eta*2
+
 pattern = len(eta)
 print(n, m, count)
 if pattern != len(eta):

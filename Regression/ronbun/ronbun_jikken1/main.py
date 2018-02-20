@@ -2,14 +2,19 @@ import numpy as np
 
 
 from Regression.shuron.shuron_jikken1.iteration import Iteration_multi,Iteration_multi_graph
-
+#####################################################################################
+#設定パラメータ
 n = 25
 m = 20
 np.random.seed(0)  # ランダム値固定
 
 count = 100
+eta = [0.003,0.005,0.01,0.015,0.02]
+#####################################################################################
 
-eta = [0.003,0.005,0.01,0.015,0.02,0.003,0.005,0.01,0.015,0.02]
+
+eta = eta * 2
+
 pattern = len(eta)
 print(n, m, count)
 if pattern != len(eta):

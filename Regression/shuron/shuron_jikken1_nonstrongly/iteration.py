@@ -8,6 +8,7 @@ from Regression.shuron.shuron_jikken1_nonstrongly.shuron_jikken1_nonstrongly_age
 from Regression.shuron.shuron_jikken1_nonstrongly.make_communication import Communication
 from Regression.shuron.shuron_jikken1_nonstrongly.problem import Problem
 
+#停止条件
 stop_condition = 0.025
 
 class Iteration_multi_nonstrongly(object):
