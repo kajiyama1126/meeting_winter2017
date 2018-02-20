@@ -4,9 +4,9 @@ import numpy as np
 from progressbar import ProgressBar
 
 from agent.agent import Agent_harnessing, Agent_harnessing_quantize_add_send_data
-from Regression.shuron_jikken1_nonstrongly.shuron_jikken1_nonstrongly_agent import Agent_harnessing_nonstrongly,Agent_harnessing_nonstrongly_quantize_add_send_data
-from Regression.shuron_jikken1_nonstrongly.make_communication import Communication
-from Regression.shuron_jikken1_nonstrongly.problem import Problem
+from Regression.shuron.shuron_jikken1_nonstrongly.shuron_jikken1_nonstrongly_agent import Agent_harnessing_nonstrongly,Agent_harnessing_nonstrongly_quantize_add_send_data
+from Regression.shuron.shuron_jikken1_nonstrongly.make_communication import Communication
+from Regression.shuron.shuron_jikken1_nonstrongly.problem import Problem
 
 
 class Iteration_multi_jikken2(object):

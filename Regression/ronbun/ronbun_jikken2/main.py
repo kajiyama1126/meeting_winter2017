@@ -1,13 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from sympy import Matrix
 import sys
-from progressbar import ProgressBar
 
-from Regression.shuron_jikken2.make_communication import Circle_communication
-from Regression.ronbun.Solver import Solver
-from Regression.ronbun.algorithm import Distributed_solver
-from agent.agent import Agent_harnessing
+from Regression.shuron.shuron_jikken2.make_communication import Circle_communication
+from Regression.ronbun.ronbun_jikken2.Solver import Solver
+from Regression.ronbun.ronbun_jikken2.algorithm import Distributed_solver
+
 np.random.seed(0)
 
 # test = False

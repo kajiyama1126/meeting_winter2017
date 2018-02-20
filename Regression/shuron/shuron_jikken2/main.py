@@ -1,13 +1,12 @@
 import sys
 
 import matplotlib.pyplot as plt
-import matplotlib.ticker as tick
 import numpy as np
 from progressbar import ProgressBar
 
-from Regression.shuron_jikken2.make_communication import Circle_communication
-from Regression.shuron_jikken2.shuron_jikken2_agent import Agent_YiHong14
-from Regression.shuron_jikken2.shuron_jikken2_agent import \
+from Regression.shuron.shuron_jikken2.make_communication import Circle_communication
+from Regression.shuron.shuron_jikken2.shuron_jikken2_agent import Agent_YiHong14
+from Regression.shuron.shuron_jikken2.shuron_jikken2_agent import \
     Agent_harnessing_quantize_add_send_data_shuron_jikken2 as Agent_jikken2
 
 np.random.seed(0)

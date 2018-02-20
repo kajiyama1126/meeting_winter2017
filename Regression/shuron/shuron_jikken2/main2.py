@@ -1,8 +1,7 @@
 import numpy as np
-import progressbar
 # from Regression.sq_mean.iteration import Iteration,
-from Regression.shuron_jikken1_nonstrongly.iteration import Iteration_multi_nonstrongly,Iteration_multi_nonstrongly_graph
-from Regression.shuron_jikken2.make_communication import Circle_communication
+from Regression.shuron.shuron_jikken1_nonstrongly.iteration import Iteration_multi_nonstrongly_graph
+from Regression.shuron.shuron_jikken2.make_communication import Circle_communication
 
 np.random.seed(0)  # ランダム値固定
 test = False

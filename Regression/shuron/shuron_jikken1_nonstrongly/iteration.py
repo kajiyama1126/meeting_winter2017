@@ -4,11 +4,11 @@ import numpy as np
 from progressbar import ProgressBar
 
 from agent.agent import Agent_harnessing, Agent_harnessing_quantize_add_send_data
-from Regression.shuron_jikken1_nonstrongly.shuron_jikken1_nonstrongly_agent import Agent_harnessing_nonstrongly,Agent_harnessing_nonstrongly_quantize_add_send_data
-from Regression.shuron_jikken1_nonstrongly.make_communication import Communication
-from Regression.shuron_jikken1_nonstrongly.problem import Problem
+from Regression.shuron.shuron_jikken1_nonstrongly.shuron_jikken1_nonstrongly_agent import Agent_harnessing_nonstrongly,Agent_harnessing_nonstrongly_quantize_add_send_data
+from Regression.shuron.shuron_jikken1_nonstrongly.make_communication import Communication
+from Regression.shuron.shuron_jikken1_nonstrongly.problem import Problem
 
-stop_condition = 0.05
+stop_condition = 0.025
 
 class Iteration_multi_nonstrongly(object):
     def __init__(self, n, m, eta,  pattern,count):
@@ -222,8 +222,8 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
 
         plt.legend()
         plt.yscale('log')
-        plt.xlabel('iteration $k$', fontsize=16)
-        plt.ylabel('$max_{i}$ $f(\hat{x}_i(k))-f^*$', fontsize=16)
+        plt.xlabel('iteration $k$', fontsize=14)
+        plt.ylabel('$max_{i}$ $f(\hat{x}_i(k))-f^* / max_{i}$ $f(x_i(0))-f^*$', fontsize=12)
 
         plt.show()
 

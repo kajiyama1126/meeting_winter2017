@@ -1,6 +1,6 @@
 from progressbar import ProgressBar
 
-from Regression.ronbun.ronbun_agent import *
+from Regression.ronbun.ronbun_jikken2.ronbun_agent import *
 
 
 class Distributed_solver(object):
