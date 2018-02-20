@@ -20,12 +20,12 @@ if pattern != len(eta):
 else:
     eta = np.reshape(eta, -1)
     #複数回用
-    program = Iteration_multi_nonstrongly(n,m,eta,pattern,count)
-    iteration_count = program.main()
+    # program = Iteration_multi_nonstrongly(n,m,eta,pattern,count)
+    # iteration_count = program.main()
 
     #一回グラフ作成用
-    # program = Iteration_multi_nonstrongly_graph(n, m, eta, pattern, count)
-    # iteration_count = program.main()
+    program = Iteration_multi_nonstrongly_graph(n, m, eta, pattern, count)
+    iteration_count = program.main()
 
     print(np.mean(iteration_count,axis=1))
 

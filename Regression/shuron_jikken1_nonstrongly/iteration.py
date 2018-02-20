@@ -8,7 +8,7 @@ from Regression.shuron_jikken1_nonstrongly.shuron_jikken1_nonstrongly_agent impo
 from Regression.shuron_jikken1_nonstrongly.make_communication import Communication
 from Regression.shuron_jikken1_nonstrongly.problem import Problem
 
-stop_condition = 0.05
+stop_condition = 0.01
 
 class Iteration_multi_nonstrongly(object):
     def __init__(self, n, m, eta,  pattern,count):
@@ -222,6 +222,10 @@ class Iteration_multi_nonstrongly_graph(Iteration_multi_nonstrongly):
 
         plt.legend()
         plt.yscale('log')
+        plt.grid(which='major', color='black', linestyle='-')
+        plt.grid(which='minor', color='gray', linestyle='-.',axis='y')
+        plt.minorticks_on()
+        plt.ylim([0.01,1])
         plt.xlabel('iteration $k$', fontsize=16)
         plt.ylabel('$max_{i}$ $f(\hat{x}_i(k))-f^*$', fontsize=16)
 
