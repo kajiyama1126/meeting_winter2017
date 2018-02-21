@@ -5,8 +5,8 @@ import numpy as np
 from progressbar import ProgressBar
 
 from agent.agent import Agent_harnessing, Agent_harnessing_quantize_add_send_data
-from Regression.shuron.shuron_jikken1.make_communication import Communication
-from Regression.shuron.shuron_jikken1.problem import Problem
+from Regression.ronbun.ronbun_jikken1.make_communication import Communication
+from Regression.ronbun.ronbun_jikken1.problem import Problem
 
 
 class Iteration(object):

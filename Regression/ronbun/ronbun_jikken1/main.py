@@ -1,7 +1,7 @@
 import numpy as np
 
 
-from Regression.shuron.shuron_jikken1.iteration import Iteration_multi,Iteration_multi_graph
+from Regression.ronbun.ronbun_jikken1.iteration import Iteration_multi,Iteration_multi_graph
 #####################################################################################
 #設定パラメータ
 n = 25
