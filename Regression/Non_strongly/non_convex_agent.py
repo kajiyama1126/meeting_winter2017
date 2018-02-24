@@ -11,8 +11,8 @@ class  Agent_harnessing_nonconvex(Agent_harnessing):
             return np.sign(self.x_i-self.b)
 
 class Agent_harnessing_nonconvex_quantize_add_send_data(Agent_harnessing_nonconvex,Agent_harnessing_quantize_add_send_data):
-    def __init__(self,n,m,A,b,eta,name,weight):
-        super(Agent_harnessing_nonconvex_quantize_add_send_data, self).__init__(n, m, A, b, eta, name, weight)
+    def __init__(self, n, m, A, b, weight, name):
+        super(Agent_harnessing_nonconvex_quantize_add_send_data, self).__init__(n, m, A, b, name, eta)
 
     def make_h(self,k):
         self.h_x = 1./(k+1)

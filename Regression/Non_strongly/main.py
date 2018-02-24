@@ -21,7 +21,7 @@ for i in range(n):
     b = np.random.rand(1)
     B.append(b)
     # Agents.append(Agent_harnessing_nonconvex(n, m,A ,b , eta, i, Weight_matrix[i]))
-    Agents.append(Agent_harnessing_nonconvex_quantize_add_send_data(n, m, A, b, eta, i, Weight_matrix[i]))
+    Agents.append(Agent_harnessing_nonconvex_quantize_add_send_data(n, m, A, b, i, eta))
 
 for k in range(iteration):
     for i in range(n):

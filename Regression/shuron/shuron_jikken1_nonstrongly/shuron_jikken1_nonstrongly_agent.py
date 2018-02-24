@@ -15,8 +15,8 @@ class Agent_YiHong14(Agent):
         grad = np.dot(A_to, (np.dot(self.A, self.x_i) - self.b))
         return grad
 
-    def __init__(self, n, m, A, b, eta, name, weight):
-        super(Agent_YiHong14, self).__init__(n, m, A, b, eta, name, weight)
+    def __init__(self, n, m, A, b, weight, name):
+        super(Agent_YiHong14, self).__init__(n, m, A, b, name, eta)
         # self.s = s
         self.Encoder = Encoder(self.n, self.m)
         self.Decoder = Decoder(self.n, self.m)
@@ -113,8 +113,8 @@ class Decoder(object):
 
 
 class Agent_harnessing_nonstrongly(Agent_harnessing):
-    def __init__(self, n, m, A, b, eta, name, weight):
-        super(Agent_harnessing_nonstrongly, self).__init__(n, m, A, b, eta, name, weight)
+    def __init__(self, n, m, A, b, eta,weight, name):
+        super(Agent_harnessing_nonstrongly, self).__init__( n, m, A, b, eta, weight, name)
         self.x_i_hat = 0
 
     def initial_state(self):
@@ -150,9 +150,8 @@ class Agent_harnessing_nonstrongly(Agent_harnessing):
 
 class Agent_harnessing_nonstrongly_quantize_add_send_data(Agent_harnessing_nonstrongly,
                                                           Agent_harnessing_quantize_add_send_data):
-    def __init__(self, n, m, A, b, eta, name, weight):
-        super(Agent_harnessing_nonstrongly_quantize_add_send_data, self).__init__(n, m, A, b, eta, name, weight)
-        self.x_i_hat = 0
+    def __init__(self, n, m, A, b,eta, weight, name):
+        super(Agent_harnessing_nonstrongly_quantize_add_send_data, self).__init__(n, m, A, b, eta ,weight,name)
 
     def make_h(self, k):
         self.h_x = 5.0 / (k + 10)

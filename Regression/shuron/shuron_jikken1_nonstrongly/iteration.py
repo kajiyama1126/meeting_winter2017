@@ -108,10 +108,11 @@ class Iteration_multi_nonstrongly(object):
         I = np.identity(self.m)
         for i in range(self.n):
             if pattern < self.pattern/2:
-                Agents.append(Agent_harnessing_nonstrongly(self.n, self.m, I, self.b[i], eta, name=i, weight=None))
+                Agents.append(Agent_harnessing_nonstrongly(self.n, self.m, I, self.b[i],eta, weight=None, name=i))
             else:
                 Agents.append(
-                    Agent_harnessing_nonstrongly_quantize_add_send_data(self.n, self.m, I, self.b[i], eta, name=i, weight=None))
+                    Agent_harnessing_nonstrongly_quantize_add_send_data(self.n, self.m, I, self.b[i],eta, weight=None,
+                                                                        name=i))
 
         return Agents
 

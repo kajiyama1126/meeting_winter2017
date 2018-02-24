@@ -185,9 +185,9 @@ for pattern in range(patterns):
     for i in range(n):
         if pattern < int(patterns) / 2:
             # Agents.append(Agent_harnessing(n, m, A, B[i], eta, i, Weight_matrix[i]))
-            Agents.append(Agent_jikken2(n, m, A, B[i], eta, i, weight_matrix[i], mu_x, C_h, h_0))
+            Agents.append(Agent_jikken2(n, m, A, B[i], eta, weight_matrix[i],i, mu_x, C_h, h_0))
         else:
-            Agents.append(Agent_YiHong14(n, m, A, B[i], i, Weight_matrix_2[i], w_2))
+            Agents.append(Agent_YiHong14(n, m, A, B[i], Weight_matrix_2[i], i))
 
     for k in range(iteration):
         prog.update(k + 1)

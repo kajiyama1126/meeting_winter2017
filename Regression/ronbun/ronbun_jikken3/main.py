@@ -7,58 +7,66 @@ from progressbar import ProgressBar
 
 from Regression.ronbun.ronbun_jikken3.make_communication import Circle_communication
 from Regression.ronbun.ronbun_jikken3.ronbun_jikken3_agent import Agent_YiHong14
-from Regression.ronbun.ronbun_jikken3.ronbun_jikken3_agent import Agent_harnessing_quantize_add_send_data_shuron_jikken2 as Agent_jikken2
+from Regression.ronbun.ronbun_jikken3.ronbun_jikken3_agent import Agent_harnessing_quantize_add_send_data_ronbun_jikken3 as Agent_jikken3
 
 np.random.seed(0)
-
-# test = False
-# test_sub = False
 test = True
-test_sub = True
 
+#共通parameter============================================================
+patterns = 2
+iteration = 10000
 n = 4
 m = 2
+K = 1 #先行研究でのellに相当(量子化レベル)
+#####################################################################################
+# f_i = ||Ax-b||_2^2の場合
+A1 =  np.array([[0.7,0.4],[0.3,0.6]])
 
-mu_x = 0.999935
-C_x = 0.5
-C_v = 0.45
+alpha = np.linalg.norm(np.dot(A1.T,A1))
+beta = np.linalg.norm(np.dot(A1.T,A1))
+print(alpha,beta)
+C_g = 1.5
+#####################################################################################
+
+# ==========================================================================
+#提案手法parameter===========================================================
+mu= 0.999935
+C_x=0.5
+C_v=0.45
+
 w = 0.0005
 eta = 0.0002
-
-iteration = 200000
-patterns = 2
-
-alpha = 1
-beta = 1
 
 delta_ast = (1.5 ** 2 + 1.5 ** 2) ** 0.5 * n ** 0.5
 delta_v = (1 ** 2 + 1 ** 2) ** 0.5
 delta_x = 0
 
-C_x0 = 0
-C_v0 = 1.5
-d_hat = 2
+C_x0 = 0 #max_i ||x_i(0)||
+C_v0 = 1.5 #max_i ||v_i(0)||
+# =========================================================================
+
+#先行研究(劣勾配)============================================================
+w_2 = 0.014
+s_0 = 10
+gamma = 0.99
+
+C_x2 = 0 #max_i ||x_i(0)||
+C_delta2 = 0 #max_i,j ||x_i(0)-x_j(0)||
+# ============================================================================
+
 Graph = Circle_communication(n, w)
 Graph.make_circle_graph()
-weight_matrix = Graph.send_P()
-# print(weight_matrix)
+Weight_matrix = Graph.send_P()
 
-Condition_proposed(n, m, weight_matrix, w, eta, C_x,C_v,mu, alpha, beta, delta_x, delta_v, delta_ast,C_x0,C_v0)
+Graph_2 = Circle_communication(n,w_2)
+Graph_2.make_circle_graph()
+Laplacian_matrix = Graph_2.send_L()
+
+Condition_proposed(n, m, Weight_matrix, w, eta, C_x,C_v, mu, alpha, beta, delta_x, delta_v, delta_ast,C_x0,C_v0)
+Condition_prior(n,m,Laplacian_matrix,w_2,s_0,gamma,C_x2,C_delta2,C_g,K)
+
 
 if test is False:
-    sys.exit()
-
-w_2 = 0.014
-gamma = 0.99
-C_g = 1.5
-Graph_2 = Circle_communication(n, w_2)
-Graph_2.make_circle_graph()
-Weight_matrix_2 = Graph_2.send_P()
-Laplacian_matrix = Graph_2.send_L()
-print(Weight_matrix_2, Laplacian_matrix)
-
-
-if test_sub is False:
     sys.exit()
 
 A = None
@@ -93,10 +101,9 @@ for pattern in range(patterns):
     prog = ProgressBar(max_value=iteration)
     for i in range(n):
         if pattern < int(patterns) / 2:
-            # Agents.append(Agent_harnessing(n, m, A, B[i], eta, i, Weight_matrix[i]))
-            Agents.append(Agent_jikken2(n, m, A, B[i], eta, i, weight_matrix[i], mu_x, C_h, h_0))
+            Agents.append(Agent_jikken3(n, m, A, B[i], eta, i, Weight_matrix[i],  C_x, C_v,mu))
         else:
-            Agents.append(Agent_YiHong14(n, m, A, B[i], i, Weight_matrix_2[i], w_2))
+            Agents.append(Agent_YiHong14(n, m, A, B[i], Laplacian_matrix[i], i))
 
     for k in range(iteration):
         prog.update(k + 1)

@@ -4,8 +4,8 @@ import math
 import copy
 
 class Agent_harnessing_quantize_add_send_data_shuron_ronbun_1(Agent_harnessing_quantize_add_send_data):
-    def __init__(self,n,m,A,b,eta,name,weight,mu_x,C_h,h_0):
-        super(Agent_harnessing_quantize_add_send_data_shuron_ronbun_1, self).__init__(n, m, A, b, eta, name, weight)
+    def __init__(self, n, m, A, b, weight, name):
+        super(Agent_harnessing_quantize_add_send_data_shuron_ronbun_1, self).__init__(n, m, A, b, name, eta)
         self.h_x=h_0
         self.h_v=1./C_h* self.h_x
         self.mu_x = mu_x
@@ -41,9 +41,9 @@ class Agent_harnessing_quantize_add_send_data_shuron_ronbun_1(Agent_harnessing_q
             return state, name
 
 
-class Agent_ADMM_ronbun_1(Agent):
-    def __init__(self, n, m, A, b, name, weight,rho,resol):
-        super(Agent_ADMM_ronbun_1, self).__init__( n, m, A, b, name, weight)
+class Agent_ADMM_ronbun_2(Agent):
+    def __init__(self, n, m, A, b, weight,rho,resol ,name):
+        super(Agent_ADMM_ronbun_2, self).__init__(n, m, A, b, weight, name)
         self.rho = rho
         # 量子化の細かさ
         self.q_resol = resol
@@ -51,6 +51,12 @@ class Agent_ADMM_ronbun_1(Agent):
     def grad(self):
         A_to = self.A.T
         grad = np.dot(A_to, (np.dot(self.A, self.x_i) - self.b))
+        # print(grad)
+        return grad
+
+    def grad2(self):
+        grad = np.dot(self.A,self.A.T)
+
         return grad
 
     def initial_state(self):
@@ -66,25 +72,30 @@ class Agent_ADMM_ronbun_1(Agent):
 
     def update_x(self,k):
         sum_x = np.dot(self.neighbor,self.xQ_j)
-
-        self.x_i = np.linalg.inv((self.grad() + 2*self.rho*self.N_i*np.identity(self.m)))*(self.rho*self.N_i*self.x_i + self.rho*sum_x-self.alpha)
+        x_iQ = self.Quantize(self.x_i)
+        part_inv = np.linalg.inv((self.grad2() + 2*self.rho*self.N_i*np.identity(self.m)))
+        self.x_i = np.dot(part_inv,(self.rho*self.N_i*x_iQ + self.rho*sum_x-self.alpha))
+        # print(self.x_i)
 
     def update_alpha(self,k):
+        x_iQ = self.Quantize(self.x_i)
         sum_x = np.dot(self.neighbor, self.xQ_j)
-        self.alpha = self.alpha + self.rho(self.N_i * self.xQ_i-sum_x)
+        self.alpha = self.alpha + self.rho*(self.N_i *x_iQ -sum_x)
 
 
     def Quantize(self,x):
         Q_x = np.round(x/self.q_resol)
+        # print(Q_x * self.q_resol)
         return Q_x * self.q_resol
 
     def send(self, j):
         if self.weight[j] == 0:
             return None, self.name
         else:
-            self.xQ_i = self.Quantize(self.x_i)
-            state = self.xQ_i
+            self.xQ_i[j] = self.Quantize(self.x_i)
+            state = self.xQ_i[j]
             name = j
+
             return state, name
 
     def receive(self, x_j, name):
@@ -93,18 +104,18 @@ class Agent_ADMM_ronbun_1(Agent):
         else:
             self.xQ_j[name] = x_j
 
-class Agent_YiHong14_ronbun_1(Agent):
+class Agent_YiHong14_ronbun_2(Agent):
 
     def s(self, k):
-        return 1000 / (k + 100)
+        return 10 / (k + 100)
 
     def grad(self):
         A_to = self.A.T
         grad = np.dot(A_to, (np.dot(self.A, self.x_i) - self.b))
         return grad
 
-    def __init__(self, n, m, A, b, name, weight):
-        super(Agent_YiHong14_ronbun_1, self).__init__(n, m, A, b,  name, weight)
+    def __init__(self, n, m, A, b, weight, name):
+        super(Agent_YiHong14_ronbun_2, self).__init__(n, m, A, b, weight, name)
 
         self.Encoder = Yi_Encoder(self.n, self.m)
         self.Decoder = Yi_Decoder(self.n, self.m)
@@ -112,6 +123,7 @@ class Agent_YiHong14_ronbun_1(Agent):
         self.x_D = np.zeros([n, m])
         self.clock = 0
         self.w = self.make_w()
+        print(self.w)
         self.send_max_y_data = [[[] for j in range(self.m)]  for i in range(self.n)]
 
     def initial_state(self):
@@ -123,6 +135,7 @@ class Agent_YiHong14_ronbun_1(Agent):
 
         for i in range(len(weight)):
             weight_min = np.min(weight)
+            print(weight_min)
             if weight_min > 0:
                 return weight_min
             else:
@@ -153,7 +166,9 @@ class Agent_YiHong14_ronbun_1(Agent):
         x = self.x_D - self.x_E
         x[self.name] = np.zeros(self.m)
 
-        self.x_i = self.x_i +  (np.dot(self.weight, x)) - self.w*self.s(k) * self.grad()
+        adjency = np.sign(self.weight)
+
+        self.x_i = self.x_i + self.w*((np.dot(adjency, x)) - self.s(k) * self.grad())
         self.clock += 1
 
     def send_y_data_zdata(self):

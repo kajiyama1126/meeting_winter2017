@@ -1,6 +1,6 @@
 from progressbar import ProgressBar
 
-from Regression.ronbun.ronbun_jikken2.ronbun_agent import *
+from Regression.ronbun.ronbun_jikken2.ronbun_agent2 import *
 
 
 class Distributed_solver(object):
@@ -25,16 +25,14 @@ class Distributed_solver(object):
                 mu_x = self.other_param[1]
                 C_h = self.other_param[2]
                 h_0 = self.other_param[3]
-                agent = Agent_harnessing_quantize_add_send_data_shuron_ronbun_1(self.n, self.m, self.A[i], self.b[i],
-                                                                                eta, i, self.weight_matrix[i], mu_x,
-                                                                                C_h, h_0)
+                agent = Agent_harnessing_quantize_add_send_data_shuron_ronbun_1(self.n, self.m, self.A[i], self.b[i], i,
+                                                                                eta)
             elif self.algo == 'ADMM':
                 rho = self.other_param[0]
                 resol = self.other_param[1]
-                agent = Agent_ADMM_ronbun_1(self.n, self.m, self.A[i], self.b, i, self.weight_matrix[i], rho,
-                                            resol)
+                agent = Agent_ADMM_ronbun_2(self.n, self.m, self.A[i], self.b, self.weight_matrix[i], i)
             elif self.algo == 'Subgrad':
-                agent = Agent_YiHong14_ronbun_1(self.n, self.m, self.A[i], self.b[i], i, self.weight_matrix[i])
+                agent = Agent_YiHong14_ronbun_2(self.n, self.m, self.A[i], self.b[i], self.weight_matrix[i], i)
 
             self.Agents.append(agent)
 

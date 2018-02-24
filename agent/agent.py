@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 class Agent(object):
-    def __init__(self, n, m, A, b, name, weight):
+    def __init__(self, n, m, A, b, weight, name):
         self.n = n
         self.m = m
         self.A = A
@@ -22,10 +22,12 @@ class Agent(object):
     def receive(self, x_j, name):
         self.x[name] = x_j
 
+    def send_estimate(self):
+        return self.x_i
 
 class Agent_harnessing(Agent):
-    def __init__(self, n, m, A, b, eta, name, weight):
-        super(Agent_harnessing, self).__init__(n, m, A, b, name, weight)
+    def __init__(self, n, m, A, b, eta, weight, name):
+        super(Agent_harnessing, self).__init__(n, m, A, b, weight, name)
         self.eta = eta
 
     def initial_state(self):
@@ -64,8 +66,8 @@ class Agent_harnessing(Agent):
 
 
 class Agent_harnessing_quantize(Agent_harnessing):
-    def __init__(self, n, m, A, b, eta, name, weight):
-        super(Agent_harnessing_quantize, self).__init__(n, m, A, b, eta, name, weight)
+    def __init__(self, n, m, A, b,eta, weight, name):
+        super(Agent_harnessing_quantize, self).__init__(n, m, A, b, eta, weight, name)
         self.eta = eta
         self.Encoder = Encoder(self.n, self.m)
         self.Decoder = Decoder(self.n, self.m)
@@ -180,8 +182,8 @@ class Decoder(object):
 
 
 class Agent_harnessing_quantize_add_send_data(Agent_harnessing_quantize):
-    def __init__(self, n, m, A, b, eta, name, weight):
-        super(Agent_harnessing_quantize_add_send_data, self).__init__(n, m, A, b, eta, name, weight)
+    def __init__(self, n, m, A, b, eta, weight, name):
+        super(Agent_harnessing_quantize_add_send_data, self).__init__(n, m, A, b, eta,weight,name)
         self.send_max_y_data = [[] for i in range(self.n)]
         self.send_max_z_data = [[] for i in range(self.n)]
 

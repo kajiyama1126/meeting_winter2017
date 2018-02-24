@@ -11,8 +11,8 @@ class Agent_YiHong14(Agent):
         grad = np.dot(A_to, (np.dot(self.A, self.x_i) - self.b))
         return grad
 
-    def __init__(self, n, m, A, b, eta, name, weight):
-        super(Agent_YiHong14, self).__init__(n, m, A, b, eta, name, weight)
+    def __init__(self, n, m, A, b, weight, name):
+        super(Agent_YiHong14, self).__init__(n, m, A, b, name, eta)
         # self.s = s
         self.Encoder = Encoder(self.n, self.m)
         self.Decoder = Decoder(self.n, self.m)

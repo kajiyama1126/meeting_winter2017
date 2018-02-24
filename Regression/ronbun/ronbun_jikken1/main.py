@@ -1,14 +1,14 @@
 import numpy as np
 
 
-from Regression.ronbun.ronbun_jikken1.iteration import Iteration_multi,Iteration_multi_graph
+from Regression.ronbun.ronbun_jikken1.iteration import Iteration_multi_graph,Iteration_multi
 #####################################################################################
 #設定パラメータ
 n = 25
 m = 20
 np.random.seed(0)  # ランダム値固定
 
-count = 100
+count = 100 #平均取る回数
 eta = [0.003,0.005,0.01,0.015,0.02]
 #####################################################################################
 

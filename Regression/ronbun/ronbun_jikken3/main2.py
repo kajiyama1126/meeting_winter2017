@@ -8,14 +8,25 @@ from Regression.ronbun.ronbun_jikken3.algorithm import Distributed_solver
 from Regression.ronbun.ronbun_jikken3.condition_check import *
 np.random.seed(0)
 
-# test = False
-# test_sub = False
 test = True
-test_sub = True
-
+#共通parameter============================================================
+patterns = 2
+iteration = 100000
 n = 4
 m = 2
+K = 1 #先行研究でのellに相当(量子化レベル)
+#####################################################################################
+# f_i = ||Ax-b||_2^2の場合
+A1 =  np.array([[0.7,0.4],[0.3,0.6]])
 
+alpha = np.linalg.norm(np.dot(A1.T,A1))
+beta = np.linalg.norm(np.dot(A1.T,A1))
+print(alpha,beta)
+C_g = 1.5
+#####################################################################################
+
+# ==========================================================================
+#提案手法parameter===========================================================
 mu= 0.999935
 C_x=0.5
 C_v=0.45
@@ -23,50 +34,44 @@ C_v=0.45
 w = 0.0005
 eta = 0.0002
 
-iteration = 200000
-patterns = 2
-
 delta_ast = (1.5 ** 2 + 1.5 ** 2) ** 0.5 * n ** 0.5
 delta_v = (1 ** 2 + 1 ** 2) ** 0.5
 delta_x = 0
 
-C_x0 = 0
-C_v0 = 1.5
-d_hat = 2
+C_x0 = 0 #max_i ||x_i(0)||
+C_v0 = 1.5 #max_i ||v_i(0)||
+# =========================================================================
+
+#先行研究(劣勾配)============================================================
+w_2 = 0.014
+s_0 = 10
+gamma = 0.99
+
+C_x2 = 0 #max_i ||x_i(0)||
+C_delta2 = 0 #max_i,j ||x_i(0)-x_j(0)||
+# ============================================================================
+
 Graph = Circle_communication(n, w)
 Graph.make_circle_graph()
-weight_matrix = Graph.send_P()
+Weight_matrix = Graph.send_P()
 
-w_2 = 0.014
-gamma = 0.99
 Graph_2 = Circle_communication(n,w_2)
 Graph_2.make_circle_graph()
-Weight_matrix_2 = Graph_2.send_P()
 Laplacian_matrix = Graph_2.send_L()
 
-#####################################################################################
-alpha = 1
-beta = 1
-C_g = 1.5
-#####################################################################################
-
-
-Condition_proposed(n, m, weight_matrix, w, eta, C_x,C_v, mu, alpha, beta, delta_x, delta_v, delta_ast,C_x0,C_v0)
-Condition_prior(n,m,Laplacian_matrix,w_2,gamma,C_g,d_hat)
+Condition_proposed(n, m, Weight_matrix, w, eta, C_x,C_v, mu, alpha, beta, delta_x, delta_v, delta_ast,C_x0,C_v0)
+Condition_prior(n,m,Laplacian_matrix,w_2,s_0,gamma,C_x2,C_delta2,C_g,K)
 
 w_2 = 0.014
 gamma = 0.99
 C_g = 1.5
 Graph_2 = Circle_communication(n,w_2)
 Graph_2.make_circle_graph()
-Weight_matrix_2 = Graph_2.send_P()
+# Weight_matrix_2 = Graph_2.send_P()
 Laplacian_matrix = Graph_2.send_L()
 
-
-
-if test_sub is False:
+if test is False:
     sys.exit()
-
 
 A = []
 b = []
@@ -80,22 +85,21 @@ for i in range(n):
 
 Sol = Solver(n,m,A,b)
 f_opt,x_opt = Sol.send_opt()
-rho = 1
-resol = 3
 
-Method = ['Proposed','Subgrad','ADMM']
+
+Method = ['Proposed','Subgrad']
 # Method = ['Proposed','Subgrad']
 Result_data = {}
 # Method = ['Subgrad']
 for algo in Method:
     if algo == 'Proposed':
-        other_param = (eta,mu_x,C_h,h_0)
+        other_param = (eta,mu,C_x,C_v)
+        weight_matrix = Weight_matrix
     elif algo == 'Subgrad':
         other_param = None
-    elif algo == 'ADMM':
-        other_param = (rho,resol)
+        weight_matrix = Weight_matrix_2
 
-    D_sol = Distributed_solver(n,m,A,b,Weight_matrix,algo,iteration,other_param)
+    D_sol = Distributed_solver(n,m,A,b,weight_matrix,algo,iteration,other_param)
     D_sol.Make_agent()
     result = D_sol.Iteration(f_opt)
     Result_data[algo] = result

@@ -11,8 +11,8 @@ class Agent_YiHong14(Agent):
         grad = np.dot(A_to, (np.dot(self.A, self.x_i) - self.b))
         return grad
 
-    def __init__(self, n, m, A, b, name, weight,w_2):
-        super(Agent_YiHong14, self).__init__(n, m, A, b,  name, weight)
+    def __init__(self, n, m, A, b, weight, name):
+        super(Agent_YiHong14, self).__init__(n, m, A, b, weight, name)
         # self.s = s
         self.Encoder = Yi_Encoder(self.n, self.m)
         self.Decoder = Yi_Decoder(self.n, self.m)
@@ -26,15 +26,15 @@ class Agent_YiHong14(Agent):
         self.x_i = np.zeros(self.m)
         self.x = np.zeros([self.n, self.m])
 
-    def make_w(self):
-        count = len(self.weight)
-
-        for i in range(count):
-            weight_min = np.min(self.weight)
-            if weight_min > 0:
-                return weight_min
-            else:
-                np.delete(self.weight, np.argmin(self.weight))
+    # def make_w(self):
+    #     count = len(self.weight)
+    #
+    #     for i in range(count):
+    #         weight_min = np.min(self.weight)
+    #         if weight_min > 0:
+    #             return weight_min
+    #         else:
+    #             np.delete(self.weight, np.argmin(self.weight))
 
 
     def send(self, j):
@@ -60,8 +60,8 @@ class Agent_YiHong14(Agent):
         self.x_D = self.Decoder.send_x_D_v_D()
         x = self.x_D - self.x_E
         x[self.name] = np.zeros(self.m)
-
-        self.x_i = self.x_i +  (np.dot(self.weight, x)) - self.w*self.s(k) * self.grad()
+        adjency_matrix = -self.weight
+        self.x_i = self.x_i + self.w*(np.dot(adjency_matrix, x) - self.s(k) * self.grad())
         self.clock += 1
 
     def send_y_data_zdata(self):
@@ -118,12 +118,12 @@ class Yi_Decoder(object):
         return self.x_D
 
 
-class Agent_harnessing_quantize_add_send_data_shuron_jikken2(Agent_harnessing_quantize_add_send_data):
-    def __init__(self,n,m,A,b,eta,name,weight,mu_x,C_h,h_0):
-        super(Agent_harnessing_quantize_add_send_data_shuron_jikken2, self).__init__(n, m, A, b, eta, name, weight)
-        self.h_x=h_0
-        self.h_v=1./C_h* self.h_x
-        self.mu_x = mu_x
+class Agent_harnessing_quantize_add_send_data_ronbun_jikken3(Agent_harnessing_quantize_add_send_data):
+    def __init__(self, n, m, A, b,eta, weight, name,C_x,C_v,mu):
+        super(Agent_harnessing_quantize_add_send_data_ronbun_jikken3, self).__init__(n, m, A, b, eta,weight,name)
+        self.h_x= C_x
+        self.h_v= C_v
+        self.mu = mu
         self.send_max_y_data = [[[] for j in range(self.m)]  for i in range(self.n)]
         self.send_max_z_data = [[[] for j in range(self.m)] for i in range(self.n)]
 
@@ -134,8 +134,8 @@ class Agent_harnessing_quantize_add_send_data_shuron_jikken2(Agent_harnessing_qu
         self.v = np.zeros([self.n, self.m])
 
     def make_h(self,k):
-        self.h_x = self.h_x *  self.mu_x
-        self.h_v = self.h_v *  self.mu_x
+        self.h_x = self.h_x *  self.mu
+        self.h_v = self.h_v *  self.mu
         # print(self.h_x)
 
 

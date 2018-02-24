@@ -109,10 +109,11 @@ class Iteration(object):
         eta = self.eta[pattern]
         for i in range(self.n):
             if pattern % 2 == 0:
-                Agents.append(Agent_harnessing(self.n, self.m,self.A[i], self.b[i],eta, name=i, weight=None))
+                Agents.append(Agent_harnessing(self.n, self.m, self.A[i], self.b[i], weight=None, name=eta))
             elif pattern % 2 == 1:
                 Agents.append(
-                    Agent_harnessing_quantize_add_send_data(self.n, self.m,self.A[i], self.b[i],eta,  name=i, weight=None))
+                    Agent_harnessing_quantize_add_send_data(self.n, self.m, self.A[i], self.b[i], weight=None,
+                                                            name=eta))
 
         return Agents
 
@@ -266,10 +267,10 @@ class Iteration_multi(object):
         eta = self.eta[pattern]
         for i in range(self.n):
             if pattern < self.pattern/2:
-                Agents.append(Agent_harnessing(self.n, self.m,self.A[i], self.b[i],eta, name=i, weight=None))
+                Agents.append(Agent_harnessing(self.n, self.m, self.A[i], self.b[i],eta, weight=self.P, name=i))
             else:
                 Agents.append(
-                    Agent_harnessing_quantize_add_send_data(self.n, self.m,self.A[i], self.b[i],eta,  name=i, weight=None))
+                    Agent_harnessing_quantize_add_send_data(self.n, self.m, self.A[i], self.b[i],eta, weight=self.P, name=i))
 
         return Agents
 

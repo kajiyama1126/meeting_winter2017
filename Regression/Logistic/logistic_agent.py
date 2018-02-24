@@ -14,5 +14,5 @@ class Agent_harnessing_logistic(Agent_harnessing):
         return g
 
 class Agent_harnessing_logistic_quantize_add_send_data(Agent_harnessing_logistic,Agent_harnessing_quantize_add_send_data):
-    def __init__(self,n,m,A,b,eta,name,weight):
-        super(Agent_harnessing_logistic_quantize_add_send_data, self).__init__(n, m, A, b, eta, name, weight)
+    def __init__(self, n, m, A, b, weight, name):
+        super(Agent_harnessing_logistic_quantize_add_send_data, self).__init__(n, m, A, b, name, eta)
