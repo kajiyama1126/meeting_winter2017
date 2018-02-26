@@ -128,11 +128,11 @@ Graph_2 = Circle_communication(n, w_2)
 Graph_2.make_circle_graph()
 Weight_matrix_2 = Graph_2.send_P()
 Laplacian_matrix = Graph_2.send_L()
-print(Weight_matrix_2, Laplacian_matrix)
+# print(Weight_matrix_2, Laplacian_matrix)
 l_2, p_2 = np.linalg.eig(Laplacian_matrix)
 
 l_2.sort()
-print(l_2, p_2)
+# print(l_2, p_2)
 
 # Peron_matrix_2 = Weight_matrix_2- (1/n)*np.ones([n,n])
 # lamb_2 = np.linalg.norm(Peron_matrix_2, 2)
@@ -142,7 +142,7 @@ lamb_n = l_2[n - 1]
 rho_h = 1 - w_2 * lamb_2
 if gamma - rho_h < 0:
     print('error')
-print(gamma - rho_h)
+# print(gamma - rho_h)
 M1 = (1 + w_2 * 2 * d_hat) / (2 * gamma) + w_2 * C_g
 M2 = ((m * n) ** 0.5 * w_2 ** 2 * lamb_n * (lamb_n + 2 * gamma * C_g)) / (2 * gamma * (gamma - rho_h))
 M = M1 + M2
@@ -187,7 +187,7 @@ for pattern in range(patterns):
             # Agents.append(Agent_harnessing(n, m, A, B[i], eta, i, Weight_matrix[i]))
             Agents.append(Agent_jikken2(n, m, A, B[i], eta, weight_matrix[i],i, mu_x, C_h, h_0))
         else:
-            Agents.append(Agent_YiHong14(n, m, A, B[i], Weight_matrix_2[i], i))
+            Agents.append(Agent_YiHong14(n, m, A, B[i], Weight_matrix_2[i],w_2, i))
 
     for k in range(iteration):
         prog.update(k + 1)

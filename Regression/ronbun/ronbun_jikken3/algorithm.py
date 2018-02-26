@@ -25,7 +25,7 @@ class Distributed_solver(object):
                 mu_x = self.other_param[1]
                 C_h = self.other_param[2]
                 h_0 = self.other_param[3]
-                agent = Agent_harnessing_quantize_add_send_data_shuron_ronbun_1(self.n, self.m, self.A[i], self.b[i], i,
+                agent = Agent_harnessing_quantize_add_send_data_shuron_ronbun_2(self.n, self.m, self.A[i], self.b[i], i,
                                                                                 eta)
             elif self.algo == 'ADMM':
                 rho = self.other_param[0]

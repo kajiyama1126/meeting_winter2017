@@ -2,43 +2,45 @@
 from agent.agent import *
 import math
 import copy
+import cvxpy as cvx
+import random
 
-class Agent_harnessing_quantize_add_send_data_shuron_ronbun_1(Agent_harnessing_quantize_add_send_data):
-    def __init__(self, n, m, A, b, weight, name):
-        super(Agent_harnessing_quantize_add_send_data_shuron_ronbun_1, self).__init__(n, m, A, b, name, eta)
-        self.h_x=h_0
-        self.h_v=1./C_h* self.h_x
-        self.mu_x = mu_x
-        self.send_max_y_data = [[[] for j in range(self.m)]  for i in range(self.n)]
-        self.send_max_z_data = [[[] for j in range(self.m)] for i in range(self.n)]
-
-    def initial_state(self):
-        self.x_i = np.zeros(self.m)
-        self.x = np.zeros([self.n, self.m])
-        self.v_i = self.grad()
-        self.v = np.zeros([self.n, self.m])
-
-    def make_h(self,k):
-        self.h_x = self.h_x *  self.mu_x
-        self.h_v = self.h_v *  self.mu_x
-        # print(self.h_x)
-
-
-    def send(self, j):
-        if self.weight[j] == 0:
-            return None, j
-        else:
-            self.Encoder.x_encode(self.x_i, j, self.h_x)
-            self.Encoder.v_encode(self.v_i, j, self.h_v)
-            state, name = self.Encoder.send_y_z(j, self.name)
-            if self.weight[j] != 0:
-                for i in range(self.m):
-                    self.send_max_y_data[j][i].append(state[0][i])
-                    self.send_max_z_data[j][i].append(state[1][i])
-            # else:
-            #     self.send_max_y_data[j].append(None)
-            #     self.send_max_z_data[j].append(None)
-            return state, name
+# class Agent_harnessing_quantize_add_send_data_shuron_ronbun_2(Agent_harnessing_quantize_add_send_data):
+#     def __init__(self,  n, m, A, b, eta, weight, name):
+#         super(Agent_harnessing_quantize_add_send_data_shuron_ronbun_2, self).__init__(n, m, A, b, eta, weight, name)
+#         self.h_x=h_0
+#         self.h_v=1./C_h* self.h_x
+#         self.mu_x = mu_x
+#         self.send_max_y_data = [[[] for j in range(self.m)]  for i in range(self.n)]
+#         self.send_max_z_data = [[[] for j in range(self.m)] for i in range(self.n)]
+#
+#     def initial_state(self):
+#         self.x_i = np.zeros(self.m)
+#         self.x = np.zeros([self.n, self.m])
+#         self.v_i = self.grad()
+#         self.v = np.zeros([self.n, self.m])
+#
+#     def make_h(self,k):
+#         self.h_x = self.h_x *  self.mu_x
+#         self.h_v = self.h_v *  self.mu_x
+#         # print(self.h_x)
+#
+#
+#     def send(self, j):
+#         if self.weight[j] == 0:
+#             return None, j
+#         else:
+#             self.Encoder.x_encode(self.x_i, j, self.h_x)
+#             self.Encoder.v_encode(self.v_i, j, self.h_v)
+#             state, name = self.Encoder.send_y_z(j, self.name)
+#             if self.weight[j] != 0:
+#                 for i in range(self.m):
+#                     self.send_max_y_data[j][i].append(state[0][i])
+#                     self.send_max_z_data[j][i].append(state[1][i])
+#             # else:
+#             #     self.send_max_y_data[j].append(None)
+#             #     self.send_max_z_data[j].append(None)
+#             return state, name
 
 
 class Agent_ADMM_ronbun_2(Agent):
@@ -103,6 +105,98 @@ class Agent_ADMM_ronbun_2(Agent):
             pass
         else:
             self.xQ_j[name] = x_j
+
+
+class Agent_DA_ronbun2(Agent):
+    def __init__(self, n, m, A, b, weight,name):
+        super(Agent_DA_ronbun2, self).__init__(n, m, A, b,weight, name)
+
+    def grad(self):
+        A_to = self.A.T
+        grad = np.dot(A_to, (np.dot(self.A, self.x_i) - self.b))
+        # print(grad)
+        return grad
+
+
+    def initial_state(self):
+        self.xi_i = np.zeros(self.m)
+        self.xi = np.zeros([self.n, self.m])
+        self.g = np.zeros([self.n, self.m])
+
+        self.x_i = np.zeros(self.m)
+        self.hat_x = self.x_i
+        # self.x = np.zeros([self.n, self.m])
+
+    def update(self,k):
+        self.xi[self.name] = self.xi_i
+        self.g[self.name] = self.grad()
+        self.xi_i = np.dot(self.weight,(self.xi+self.g))
+        self.x_i = self.psi(-self.xi_i,self.theta(k+1))
+
+        self.hat_x = 1/(k+1)*self.x_i + k/(k+1) * self.hat_x
+        # print(self.x_i)
+    def theta(self,k):
+        return 100 * k**0.5
+
+    def psi(self,v,theta):
+        x_0 = np.zeros([self.m,1])
+        x = cvx.Variable(self.m)
+
+        obj = cvx.Maximize((v*(x-x_0))-theta*1/2 *cvx.power(cvx.norm(x,2),2))
+        pro = cvx.Problem(obj)
+        pro.solve(verbose=False)
+        y = np.array(x.value)
+        y = np.reshape(y,-1)
+        # print(y.shape)
+        return y
+
+    def send(self, j):
+        return (self.xi_i, self.grad()), self.name
+
+    def receive(self, x_j, name):
+        self.xi[name] = x_j[0]
+        self.g[name] = x_j[1]
+
+    def send_estimate(self):
+        return self.hat_x
+
+class Agent_DA_Quantize_ronbun2(Agent_DA_ronbun2):
+    def __init__(self, n, m, A, b, weight,delta,name):
+        super(Agent_DA_ronbun2, self).__init__(n, m, A, b,weight, name)
+        self.delta = delta
+
+    def Quantize_p(self,x):
+        dim = len(x)
+        y = np.zeros_like(x)
+        for i in range(dim):
+            y[i] = copy.copy(x[i])
+            y_up = np.ceil(y[i]*self.delta)/self.delta
+            y_down = np.floor(y[i]*self.delta)/self.delta
+            # print(y_up,y_down)
+            tmp = np.random.rand()
+            if tmp < (y_up-y[i])/(y_up-y_down):
+                y[i] = y_down
+            else:
+                y[i] = y_up
+
+        return y
+
+    def update(self,k):
+        self.xi[self.name] = self.xi_i
+        self.g[self.name] = self.grad()
+        self.Q_xi_g = np.zeros_like(self.xi)
+        for i in range(self.n):
+            self.Q_xi_g[i] = self.Quantize_p(self.xi[i] + self.g[i])
+
+        self.xi_i = np.dot(self.weight,(self.Q_xi_g))
+        self.x_i = self.psi(-self.xi_i,self.theta(k+1))
+
+        self.hat_x = 1/(k+1)*self.x_i + k/(k+1) * self.hat_x
+
+
+
+
+
 
 class Agent_YiHong14_ronbun_2(Agent):
 

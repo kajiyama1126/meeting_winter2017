@@ -4,7 +4,7 @@ from progressbar import ProgressBar
 
 from Regression.ronbun.ronbun_jikken2.make_communication import Communication
 from Regression.ronbun.ronbun_jikken2.problem import Problem
-from Regression.ronbun.ronbun_jikken2.ronbun_agent2 import Agent_YiHong14_ronbun_2,Agent_ADMM_ronbun_2
+from Regression.ronbun.ronbun_jikken2.ronbun_agent2 import Agent_YiHong14_ronbun_2,Agent_ADMM_ronbun_2,Agent_DA_ronbun2,Agent_DA_Quantize_ronbun2
 from agent.agent import Agent_harnessing, Agent_harnessing_quantize_add_send_data
 
 
@@ -98,6 +98,9 @@ class Iteration_multi(object):
                 rho = param[0]
                 resol = param[1]
                 Agents.append(Agent_ADMM_ronbun_2(self.n, self.m, self.A[i], self.b[i], self.P[i],rho,resol, name=i))
+            elif algo == 'DA':
+                delta = param
+                Agents.append(Agent_DA_Quantize_ronbun2(self.n, self.m, self.A[i], self.b[i], self.P[i],delta, name=i))
             # elif algo == 'stochastic':
             #     Agents.append(Agent_harnessing_quantize_add_send_data(self.n, self.m, self.A[i], self.b[i], eta, name=i, weight=None))
 
@@ -113,10 +116,11 @@ class Iteration_multi(object):
             for i in range(self.n):
                 self.Agents[i].weight = self.P_history[k][i]
 
-            if self.algo[pattern] == 'Harnessing' or self.algo[pattern] == 'Proposed' or self.algo[pattern] == 'Subgrad':
+            if self.algo[pattern] == 'Harnessing' or self.algo[pattern] == 'Proposed' or self.algo[pattern] == 'Subgrad' or self.algo[pattern] == 'DA':
                 self.pro_update(k)
             elif self.algo[pattern] == 'ADMM':
                 self.ADMM_update(k)
+
 
             f_value = []
             for i in range(self.n):
