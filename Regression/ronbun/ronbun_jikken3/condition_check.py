@@ -36,7 +36,7 @@ def Condition_proposed(n, m, weight_matrix, w, eta, C_x,C_v, mu, alpha, beta, de
     ell0_x = C_x0/C_x -1/2
     ell0_v = C_v0/C_v -1/2
 
-
+    print('muy-rho', mu - rho)
     print('ell_x0',ell0_x, 'ell_v0',ell0_v)
     print('ell_x', ell_x, 'ell_v', ell_v)
 
@@ -113,3 +113,4 @@ def Condition_prior(n, m, laplacian_matrix,w,s_0,gamma,C_x,C_del,C_g,K):
     M2 = ((m * n) ** 0.5 * w ** 2 * lamb_n * (lamb_n + 2 * gamma * C_g)) / (2 * gamma * (gamma - rho_h))
     M = M1 + M2
     print('M', M)
+

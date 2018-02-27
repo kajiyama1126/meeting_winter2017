@@ -134,7 +134,9 @@ class Iteration_multi(object):
             if error < stop_condition:
                 return k
 
+
         print('Nostop')
+        return k
         import sys
         sys.exit()
 

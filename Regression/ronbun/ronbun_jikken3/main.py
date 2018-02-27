@@ -9,12 +9,12 @@ from Regression.ronbun.ronbun_jikken3.ronbun_jikken3_agent import \
     Agent_harnessing_quantize_add_send_data_ronbun_jikken3 as Agent_jikken3
 
 np.random.seed(0)
-# Parameter_setting = True
-Parameter_setting = False
+Parameter_setting = True
+# Parameter_setting = False
 
 # 共通parameter============================================================
 patterns = 2
-iteration = 40000
+iteration = 30000
 n = 4
 m = 2
 K = 1  # 先行研究でのellに相当(量子化レベル)
@@ -31,14 +31,14 @@ C_g = np.linalg.norm(np.dot(np.dot(A1.T, A1),np.array([-1,1])),2)
 #####################################################################################
 
 # ==========================================================================
+#63段階
 # 提案手法parameter===========================================================
-mu = 0.99992
-C_x = 0.45
-C_v = 0.9
+mu = 0.9968
+C_x = 2.1
+C_v = 4.1
 
-w = 0.0008
-
-eta = 0.00038
+w = 0.021
+eta = 0.0088
 
 delta_ast = np.linalg.norm(np.dot(np.linalg.inv(np.dot(A1.T,A1)),A1.T),2)*(1. ** 2 + 1. ** 2) ** 0.5 * n ** 0.5
 delta_v = np.linalg.norm(A1,2)*(1**2+1**2)**0.5
@@ -47,9 +47,8 @@ delta_x = 0
 C_x0 = 0  # max_i ||x_i(0)||
 C_v0 = np.linalg.norm(A1,2)*(1.**2 + 1.**2)**0.5  # max_i ||v_i(0)||
 # =========================================================================
-
 # 先行研究(劣勾配)============================================================
-w_2 = 0.025
+w_2 = 0.25
 s_0 = 10
 gamma = 0.99
 
