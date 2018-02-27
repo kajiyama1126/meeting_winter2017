@@ -37,6 +37,7 @@ C_x = 0.45
 C_v = 0.9
 
 w = 0.0008
+
 eta = 0.00038
 
 delta_ast = np.linalg.norm(np.dot(np.linalg.inv(np.dot(A1.T,A1)),A1.T),2)*(1. ** 2 + 1. ** 2) ** 0.5 * n ** 0.5
