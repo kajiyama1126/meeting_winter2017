@@ -5,8 +5,8 @@ import numpy as np
 from progressbar import ProgressBar
 
 from agent.agent import Agent_harnessing, Agent_harnessing_quantize_add_send_data
-from Regression.ronbun.ronbun_jikken1.make_communication import Communication
-from Regression.ronbun.ronbun_jikken1.problem import Problem
+from ronbun.ronbun_jikken1.make_communication import Communication
+from ronbun.ronbun_jikken1.problem import Problem
 
 
 class Iteration_multi(object):
@@ -22,7 +22,7 @@ class Iteration_multi(object):
         self.eta = eta
 
         self.pattern = pattern
-        self.iterate = 10000
+        self.iterate = 6000
         self.count =count
 
     def main(self):
@@ -33,7 +33,8 @@ class Iteration_multi(object):
             self.P, self.P_history = self.make_communication_graph()
 
             for i in range(self.pattern):
-                iterate_count[i].append(self.iteration(i,stop_condition=0.0001))
+                iterate_count[i].append(self.iteration(i, stop_condition=0.01))
+                #iterate_count[i].append(self.iteration(i, stop_condition=0.00001))
 
         return iterate_count
 
@@ -42,8 +43,10 @@ class Iteration_multi(object):
         """
         :return:  float, float
         """
-        self.A = np.array([np.identity(self.m) for i in range(self.n)])
-        self.A += 0.1 * np.array([np.random.randn(self.m, self.m) for i in range(self.n)])
+        #self.A = np.array([np.identity(self.m) for i in range(self.n)])
+        #self.A += 0.1 * np.array([np.random.randn(self.m, self.m) for i in range(self.n)])
+
+        self.A = 0.2*np.array([np.random.randn(self.m, self.m) for i in range(self.n)])
         self.b = [np.random.randn(self.m) for i in range(self.n)]
         # p = [np.array([1,1,0.1,1,0])  for i in range(n)]
         self.b_num = np.array(self.b)
@@ -71,7 +74,7 @@ class Iteration_multi(object):
 
     def make_communication_graph(self):  # 通信グラフを作成＆保存
         weight_graph = Communication(self.n, 4, 0.3)
-        weight_graph.make_connected_WS_graph()
+        weight_graph.make_connected_WS_graph(self.count)
         P = weight_graph.P
         P_history = []
         for k in range(self.iterate):  # 通信グラフを作成＆保存
@@ -159,7 +162,7 @@ class Iteration_multi_graph(Iteration_multi):
             # send_y_data = [[] for i in range(self.pattern)]
             # send_z_data = [[] for i in range(self.pattern)]
             for i in range(self.pattern):
-                cont , graph,ydata_zdata = self.iteration(i, stop_condition=0.0001)
+                cont , graph, ydata_zdata = self.iteration(i, stop_condition=0.00001)
                 iterate_count[i].append(cont)
                 iterate_graph[i] = graph
                 if i < self.pattern/2:
@@ -171,7 +174,8 @@ class Iteration_multi_graph(Iteration_multi):
 
 
         label = ['[20]', 'Proposed']
-        line = ['-', '-.']
+        #ine = ['-.', '-']
+        line = ['--', '-']
 
         for i in range(self.pattern):
             if i < self.pattern/2:
@@ -184,10 +188,14 @@ class Iteration_multi_graph(Iteration_multi):
 
         plt.legend()
         plt.yscale('log')
-        plt.grid(which='major', color='black', linestyle='-')
+        plt.grid(which='major', color='gray', linestyle=':')
         plt.grid(which='minor', color='gray', linestyle=':')
-        plt.xlabel('iteration $k$', fontsize=16)
-        plt.ylabel('$max_{i}$ $f(x_i(k))-f^*$', fontsize=16)
+        plt.xlabel('iteration $k$', fontsize=10)
+        plt.ylabel('$max_{i}$ $f(x_i(k))-f^*$', fontsize=10)
+        plt.xlim([0, 3000])
+        plt.ylim([0.00001, 100])
+        plt.savefig("cost_compare_eta.png")
+        plt.savefig("cost_compare_eta.eps")
         plt.show()
 
         for i in range(self.pattern):

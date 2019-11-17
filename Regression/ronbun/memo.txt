@@ -1,0 +1,6 @@
+jikken1: ステップサイズ \eta を変えた時の比較
+jikken2: 他手法との比較
+jikken3: ビット数の比較
+jikken3: 3ビットの場合の劣勾配とharnessingの比較
+jikken4: 量子化レベル数を変えた時の比較
+jikken5: 強凸ではない一般の凸の場合

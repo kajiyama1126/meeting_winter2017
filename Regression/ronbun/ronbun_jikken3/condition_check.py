@@ -15,6 +15,7 @@ def Condition_proposed(n, m, weight_matrix, w, eta, C_x,C_v, mu, alpha, beta, de
     P_inv = np.linalg.inv(P)
     C_P = np.linalg.norm(P, 2) * np.linalg.norm(P_inv, 2)
 
+    print(C_P,np.linalg.norm(P, 2),np.linalg.norm(P_inv, 2))
     if mu -rho <= 0:
         print('error')
         print('mu-rho', mu-rho)

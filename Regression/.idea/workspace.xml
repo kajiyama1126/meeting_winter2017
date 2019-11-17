@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="76f14a03-8077-4afb-bc44-ac47a1632be9" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/ronbun/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3_1904020/Solver.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3_1904020/algorithm.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3_1904020/condition_check.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3_1904020/cost_3bit.eps" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3_1904020/cost_3bit.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3_1904020/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3_1904020/make_communication.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3_1904020/memo.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3_1904020/ronbun_jikken3_agent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/Solver.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/make_communication.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/non_convex_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/meeting_winter2017.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Non_strongly/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Non_strongly/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Non_strongly/non_convex_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/Non_strongly/non_convex_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken1/iteration.py" beforeDir="false" afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken1/iteration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken1/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken1/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken1/make_communication.py" beforeDir="false" afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken1/make_communication.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken2/iteration.py" beforeDir="false" afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken2/iteration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken2/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken2/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken2/ronbun_agent2.py" beforeDir="false" afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken2/ronbun_agent2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3-2/Solver.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3-2/algorithm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3-2/condition_check.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3-2/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3-2/make_communication.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3-2/memo.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3-2/ronbun_jikken3_agent.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3/condition_check.py" beforeDir="false" afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3/condition_check.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3/memo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3/memo.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ronbun/ronbun_jikken3/ronbun_jikken3_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/ronbun/ronbun_jikken3/ronbun_jikken3_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../agent/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/../agent/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jikken.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jikken2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jikken3.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jikken4.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jikken6.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jikken6_again.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jikken8.py" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>self.eta</find>
+      <find>eta</find>
+      <find>edge_colors</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Non_strongly/main.py" />
+        <option value="$PROJECT_DIR$/ronbun/ronbun_jikken1/main.py" />
+        <option value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/Solver.py" />
+        <option value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main.py" />
+        <option value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/make_communication.py" />
+        <option value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/non_convex_agent.py" />
+        <option value="$PROJECT_DIR$/ronbun/ronbun_jikken1/make_communication.py" />
+        <option value="$PROJECT_DIR$/ronbun/ronbun_jikken1/iteration.py" />
+        <option value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly_old/main_some_pattern.py" />
+        <option value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern.py" />
+        <option value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern2.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="187" />
+    <option name="y" value="4" />
+    <option name="width" value="1219" />
+    <option name="height" value="1047" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Regression" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Regression" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Regression" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Regression" type="462c0819:PsiDirectoryNode" />
+              <item name="agent" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Regression" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Regression" type="462c0819:PsiDirectoryNode" />
+              <item name="ronbun" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Regression" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Regression" type="462c0819:PsiDirectoryNode" />
+              <item name="ronbun" type="462c0819:PsiDirectoryNode" />
+              <item name="ronbun_jikken1" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Regression" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Regression" type="462c0819:PsiDirectoryNode" />
+              <item name="ronbun" type="462c0819:PsiDirectoryNode" />
+              <item name="ronbun_jikken5_Non_strongly" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Regression" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Regression" type="462c0819:PsiDirectoryNode" />
+              <item name="ronbun" type="462c0819:PsiDirectoryNode" />
+              <item name="ronbun_jikken5_Non_strongly_old" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Regression" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Regression" type="462c0819:PsiDirectoryNode" />
+              <item name="shuron" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Regression" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Regression" type="462c0819:PsiDirectoryNode" />
+              <item name="sq_mean" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.main_some_pattern2">
+    <configuration name="iteration" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Regression" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ronbun/ronbun_jikken1" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ronbun/ronbun_jikken1/iteration.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Regression" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ronbun/ronbun_jikken1" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ronbun/ronbun_jikken1/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main_some_pattern" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Regression" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main_some_pattern2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Regression" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="non_convex_agent" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Regression" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/non_convex_agent.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main_some_pattern2" />
+        <item itemvalue="Python.main_some_pattern" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.iteration" />
+        <item itemvalue="Python.non_convex_agent" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="76f14a03-8077-4afb-bc44-ac47a1632be9" name="Default" comment="" />
+      <created>1525398336315</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1525398336315</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="187" y="4" width="1219" height="1047" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22777307" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32932165" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39934355" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" weight="0.22777307" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32932165" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39934355" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Non_strongly/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/envs/py37/Lib/site-packages/numpy/lib/_datasource.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="617" selection-start-line="617" selection-end-line="617" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/Solver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="17" column="90" selection-start-line="17" selection-start-column="90" selection-end-line="17" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="48" column="45" lean-forward="true" selection-start-line="43" selection-start-column="4" selection-end-line="48" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/make_communication_orig.py" />
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/make_communication.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-690">
+          <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
+          <folding>
+            <element signature="e#24#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../TAC2019_4_20_kaji/Regression/ronbun/ronbun_jikken5_Non_strongly/make_communication.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="22" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../TAC2019_4_20_kaji/Regression/ronbun/ronbun_jikken5_Non_strongly/non_convex_agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-136">
+          <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#80#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../TAC2019_4_20_kaji/Regression/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-690">
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/non_convex_agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="27" selection-start-line="27" selection-end-line="27" />
+          <folding>
+            <element signature="e#0#80#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken1/make_communication.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="18" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
+          <folding>
+            <element signature="e#24#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken1/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/agent/agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken1/iteration.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="153" column="26" selection-start-line="153" selection-start-column="26" selection-end-line="153" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly_old/main_some_pattern.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="512">
+          <caret line="100" selection-start-line="100" selection-end-line="112" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly_old/main_some_pattern2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="444">
+          <caret line="101" selection-start-line="101" selection-end-line="119" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ronbun/ronbun_jikken5_Non_strongly/main_some_pattern2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

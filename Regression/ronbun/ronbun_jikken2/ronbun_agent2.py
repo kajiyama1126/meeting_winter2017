@@ -44,7 +44,7 @@ import random
 
 
 class Agent_ADMM_ronbun_2(Agent):
-    def __init__(self, n, m, A, b, weight,rho,resol ,name):
+    def __init__(self, n, m, A, b, weight,rho, resol ,name):
         super(Agent_ADMM_ronbun_2, self).__init__(n, m, A, b, weight, name)
         self.rho = rho
         # 量子化の細かさ
@@ -63,7 +63,8 @@ class Agent_ADMM_ronbun_2(Agent):
 
     def initial_state(self):
         self.x_i = np.zeros(self.m)
-        self.alpha = np.zeros(self.m)
+        self.alpha = 0.001*np.random.rand(self.m)
+        #self.alpha = np.zeros(self.m)
         # self.x = np.zeros([self.n, self.m])
         self.xQ_j = np.zeros([self.n, self.m])
         self.xQ_i = np.zeros([self.n, self.m])
@@ -72,17 +73,28 @@ class Agent_ADMM_ronbun_2(Agent):
         self.neighbor = np.sign(self.weight)
         self.neighbor[self.name] = 0
 
-    def update_x(self,k):
+    def update(self,k):
         sum_x = np.dot(self.neighbor,self.xQ_j)
         x_iQ = self.Quantize(self.x_i)
         part_inv = np.linalg.inv((self.grad2() + 2*self.rho*self.N_i*np.identity(self.m)))
         self.x_i = np.dot(part_inv,(self.rho*self.N_i*x_iQ + self.rho*sum_x-self.alpha))
         # print(self.x_i)
 
-    def update_alpha(self,k):
-        x_iQ = self.Quantize(self.x_i)
+        #x_iQ = self.Quantize(self.x_i)
         sum_x = np.dot(self.neighbor, self.xQ_j)
         self.alpha = self.alpha + self.rho*(self.N_i *x_iQ -sum_x)
+
+    # def update_x(self,k):
+    #     sum_x = np.dot(self.neighbor,self.xQ_j)
+    #     x_iQ = self.Quantize(self.x_i)
+    #     part_inv = np.linalg.inv((self.grad2() + 2*self.rho*self.N_i*np.identity(self.m)))
+    #     self.x_i = np.dot(part_inv,(self.rho*self.N_i*x_iQ + self.rho*sum_x-self.alpha))
+    #     # print(self.x_i)
+    #
+    # def update_alpha(self,k):
+    #     x_iQ = self.Quantize(self.x_i)
+    #     sum_x = np.dot(self.neighbor, self.xQ_j)
+    #     self.alpha = self.alpha + self.rho*(self.N_i *x_iQ -sum_x)
 
 
     def Quantize(self,x):
@@ -136,7 +148,8 @@ class Agent_DA_ronbun2(Agent):
         self.hat_x = 1/(k+1)*self.x_i + k/(k+1) * self.hat_x
         # print(self.x_i)
     def theta(self,k):
-        return 100 * k**0.5
+        #return 100 * k**0.5
+        return 5*np.sqrt(k)
 
     def psi(self,v,theta):
         x_0 = np.zeros([self.m,1])
@@ -194,14 +207,11 @@ class Agent_DA_Quantize_ronbun2(Agent_DA_ronbun2):
         self.hat_x = 1/(k+1)*self.x_i + k/(k+1) * self.hat_x
 
 
-
-
-
-
 class Agent_YiHong14_ronbun_2(Agent):
 
     def s(self, k):
-        return 10 / (k + 100)
+        #return 10 / (k + 100)
+        return 5 / (k + 10)
 
     def grad(self):
         A_to = self.A.T
@@ -267,6 +277,7 @@ class Agent_YiHong14_ronbun_2(Agent):
 
     def send_y_data_zdata(self):
         return self.send_max_y_data, None
+
 class Yi_Encoder(object):
     def __init__(self, n, m):
         self.n = n

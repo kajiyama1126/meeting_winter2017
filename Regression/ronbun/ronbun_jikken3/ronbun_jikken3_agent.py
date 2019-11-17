@@ -4,7 +4,9 @@ import numpy as np
 class Agent_YiHong14(Agent):
 
     def s(self, k):
-        return 100 / (k + 100)
+        #return 100 / (k + 100)
+        return 15 / (k + 100)
+        #return 5 / (k + 10)
 
     def grad(self):
         A_to = self.A.T

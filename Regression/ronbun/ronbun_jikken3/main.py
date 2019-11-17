@@ -9,12 +9,14 @@ from Regression.ronbun.ronbun_jikken3.ronbun_jikken3_agent import \
     Agent_harnessing_quantize_add_send_data_ronbun_jikken3 as Agent_jikken3
 
 np.random.seed(0)
-Parameter_setting = True
-# Parameter_setting = False
+#Parameter_setting = True
+Parameter_setting = False
 
 # 共通parameter============================================================
 patterns = 2
-iteration = 30000
+#iteration = 30000
+#iteration = 120000
+iteration = 300000
 n = 4
 m = 2
 K = 1  # 先行研究でのellに相当(量子化レベル)
@@ -31,14 +33,31 @@ C_g = np.linalg.norm(np.dot(np.dot(A1.T, A1),np.array([-1,1])),2)
 #####################################################################################
 
 # ==========================================================================
-#63段階
+#3段階
 # 提案手法parameter===========================================================
-mu = 0.9968
-C_x = 2.1
-C_v = 4.1
+#mu = 0.99992
+# mu = 0.9999
+# C_x = 0.45
+# C_v = 0.90
 
-w = 0.021
-eta = 0.0088
+#w = 0.0008
+#eta = 0.000388
+
+#w = 0.001
+#eta = 0.000555
+
+# mu = 0.999935
+# C_x = 0.5
+# C_v = 10/9
+# w = 0.0005
+# eta = 0.0002
+
+mu = 0.99992
+C_x = 0.45
+C_v = 0.9
+
+w = 0.0008
+eta = 0.00038
 
 delta_ast = np.linalg.norm(np.dot(np.linalg.inv(np.dot(A1.T,A1)),A1.T),2)*(1. ** 2 + 1. ** 2) ** 0.5 * n ** 0.5
 delta_v = np.linalg.norm(A1,2)*(1**2+1**2)**0.5
@@ -46,7 +65,24 @@ delta_x = 0
 
 C_x0 = 0  # max_i ||x_i(0)||
 C_v0 = np.linalg.norm(A1,2)*(1.**2 + 1.**2)**0.5  # max_i ||v_i(0)||
+
 # =========================================================================
+# #63段階
+# # 提案手法parameter===========================================================
+# mu = 0.9968
+# C_x = 2.1
+# C_v = 4.1
+#
+# w = 0.021
+# eta = 0.0088
+#
+# delta_ast = np.linalg.norm(np.dot(np.linalg.inv(np.dot(A1.T,A1)),A1.T),2)*(1. ** 2 + 1. ** 2) ** 0.5 * n ** 0.5
+# delta_v = np.linalg.norm(A1,2)*(1**2+1**2)**0.5
+# delta_x = 0
+#
+# C_x0 = 0  # max_i ||x_i(0)||
+# C_v0 = np.linalg.norm(A1,2)*(1.**2 + 1.**2)**0.5  # max_i ||v_i(0)||
+# # =========================================================================
 # 先行研究(劣勾配)============================================================
 w_2 = 0.25
 s_0 = 10
@@ -143,19 +179,30 @@ for pattern in range(patterns):
     for i in range(n):
         print(Agents[i].x_i)
 
-    dim_label = ['Proposed', '[37]']
+    dim_label = ['Proposed', '[35]']
     plt.plot(sumf_list, label=dim_label[pattern])
     plt.yscale('log')
 
-    # plt.grid(which='major', color='black', linestyle='-')
-    # plt.grid(which='minor', color='gray', linestyle=':', axis='y')
-    # plt.minorticks_on()
+    plt.grid(which='major', color='gray', linestyle=':')
+    plt.grid(which='minor', color='gray', linestyle=':', axis='y')
+    #plt.grid(which="both", color='gray', linestyle=':')
+    plt.minorticks_on()
     plt.xlabel('iteration $k$', fontsize=12)
     plt.ylabel('$max_{i} f(x_i(k))-f^*$', fontsize=12)
     y_data, z_data = Agents[0].send_y_data_zdata()
     ydata_set.append(y_data)
     zdata_set.append(z_data)
 
+plt.tick_params(labelsize=10)
+plt.legend(fontsize=10)
+plt.xlim([0, iteration])
+#plt.xlim([0, 30000])
+#plt.ylim([0.000001, 10])
+plt.ylim([0.0000001, 10])
+#plt.ylim([10**(-10), 10**(-1)])
+plt.tight_layout()
+plt.savefig("cost_3bit.png")
+plt.savefig("cost_3bit.eps")
 plt.legend()
 plt.show()
 
