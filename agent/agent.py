@@ -81,8 +81,10 @@ class Agent_harnessing_quantize(Agent_harnessing):
         self.h_v = 1
 
     def make_h(self,k):
-        self.h_x = self.h_x * 0.99
-        self.h_v = self.h_v * 0.99
+        # self.h_x = self.h_x * 0.99
+        # self.h_v = self.h_v * 0.99
+        self.h_x = self.h_x * 0.995
+        self.h_v = self.h_v * 0.995
 
 
     def send(self, j):

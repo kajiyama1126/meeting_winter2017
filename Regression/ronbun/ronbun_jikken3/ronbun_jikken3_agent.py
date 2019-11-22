@@ -1,4 +1,4 @@
-from agent.agent import Agent,Agent_harnessing_quantize_add_send_data
+from quanzize.TAC2019_2019_0620.agent.agent import Agent,Agent_harnessing_quantize_add_send_data
 import numpy as np
 
 class Agent_YiHong14(Agent):

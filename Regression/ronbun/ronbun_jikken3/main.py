@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 import cvxpy as cvx
 from progressbar import ProgressBar
 
-from Regression.ronbun.ronbun_jikken3.condition_check import *
-from Regression.ronbun.ronbun_jikken3.make_communication import Circle_communication
-from Regression.ronbun.ronbun_jikken3.ronbun_jikken3_agent import Agent_YiHong14
-from Regression.ronbun.ronbun_jikken3.ronbun_jikken3_agent import \
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken3.condition_check import *
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken3.make_communication import Circle_communication
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken3.ronbun_jikken3_agent import Agent_YiHong14
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken3.ronbun_jikken3_agent import \
     Agent_harnessing_quantize_add_send_data_ronbun_jikken3 as Agent_jikken3
 
 np.random.seed(0)
@@ -180,7 +180,8 @@ for pattern in range(patterns):
         print(Agents[i].x_i)
 
     dim_label = ['Proposed', '[35]']
-    plt.plot(sumf_list, label=dim_label[pattern])
+    dim_color = ['g','r']
+    plt.plot(sumf_list, label=dim_label[pattern],color=dim_color[pattern])
     plt.yscale('log')
 
     plt.grid(which='major', color='gray', linestyle=':')
@@ -198,7 +199,7 @@ plt.legend(fontsize=10)
 plt.xlim([0, iteration])
 #plt.xlim([0, 30000])
 #plt.ylim([0.000001, 10])
-plt.ylim([0.0000001, 10])
+plt.ylim([0.00000001, 10])
 #plt.ylim([10**(-10), 10**(-1)])
 plt.tight_layout()
 plt.savefig("cost_3bit.png")
@@ -206,27 +207,27 @@ plt.savefig("cost_3bit.eps")
 plt.legend()
 plt.show()
 
-# for pattern in range(patterns):
-#     y_data = ydata_set[pattern]
-#     z_data = zdata_set[pattern]
-#
-#     for i in range(n):
-#         if y_data[i][0] == []:
-#             pass
-#         else:
-#             dim_label = ['1', '2']
-#             for j in range(m):
-#                 plt.plot(y_data[i][j], 'o', markersize=4)
-#                 plt.xlabel('iteration $k$', fontsize=18)
-#                 plt.ylabel('$y_{12}^' + dim_label[j] + '$', fontsize=20)
-#                 plt.legend()
-#                 plt.show()
-#                 # plt.legend()
-#                 # plt.show()
-#                 if z_data is not None:
-#                     plt.plot(z_data[i][j], 'o', markersize=4)
-#                     plt.xlabel('iteration $k$', fontsize=18)
-#                     plt.ylabel('$z_{12}^' + dim_label[j] + '$', fontsize=20)
-#                     plt.legend()
-#                     plt.show()
+for pattern in range(patterns):
+    y_data = ydata_set[pattern]
+    z_data = zdata_set[pattern]
+
+    for i in range(1):
+        if y_data[i][0] == []:
+            pass
+        else:
+            dim_label = ['1', '2']
+            for j in range(m):
+                plt.plot(y_data[i][j], 'o', markersize=4,color=dim_color[pattern])
+                plt.xlabel('iteration $k$', fontsize=18)
+                plt.ylabel('$y_{12}^' + dim_label[j] + '$', fontsize=18)
+                # plt.legend()
+                plt.show()
+                # plt.legend()
+                # plt.show()
+                if z_data is not None:
+                    plt.plot(z_data[i][j], 'o', markersize=4,color=dim_color[pattern])
+                    plt.xlabel('iteration $k$', fontsize=18)
+                    plt.ylabel('$z_{12}^' + dim_label[j] + '$', fontsize=18)
+                    # plt.legend()
+                    plt.show()
 #             break

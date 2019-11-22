@@ -2,7 +2,7 @@ import numpy as np
 
 
 #from Regression.ronbun.ronbun_jikken1.iteration import Iteration_multi_graph,Iteration_multi
-from ronbun.ronbun_jikken1.iteration import Iteration_multi_graph, Iteration_multi
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken1.iteration import Iteration_multi_graph, Iteration_multi
 
 #####################################################################################
 #設定パラメータ
@@ -28,12 +28,12 @@ if pattern != len(eta):
 else:
     eta = np.reshape(eta, -1)
     #複数回用
-    #program = Iteration_multi(n,m,eta,pattern,count)
-    #iteration_count = program.main()
+    program = Iteration_multi(n,m,eta,pattern,count)
+    iteration_count = program.main()
 
     #一回グラフ作成用
-    program = Iteration_multi_graph(n, m, eta, pattern, count)
-    iteration_count = program.main()
+    # program = Iteration_multi_graph(n, m, eta, pattern, count)
+    # iteration_count = program.main()
 
     print(np.mean(iteration_count, axis=1))
 

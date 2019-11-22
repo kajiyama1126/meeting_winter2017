@@ -4,9 +4,9 @@ import numpy as np
 
 from progressbar import ProgressBar
 
-from agent.agent import Agent_harnessing, Agent_harnessing_quantize_add_send_data
-from ronbun.ronbun_jikken1.make_communication import Communication
-from ronbun.ronbun_jikken1.problem import Problem
+from quanzize.TAC2019_2019_0620.agent.agent import Agent_harnessing, Agent_harnessing_quantize_add_send_data
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken1.make_communication import Communication
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken1.problem import Problem
 
 
 class Iteration_multi(object):
@@ -33,8 +33,8 @@ class Iteration_multi(object):
             self.P, self.P_history = self.make_communication_graph()
 
             for i in range(self.pattern):
-                iterate_count[i].append(self.iteration(i, stop_condition=0.01))
-                #iterate_count[i].append(self.iteration(i, stop_condition=0.00001))
+                # iterate_count[i].append(self.iteration(i, stop_condition=0.01))
+                iterate_count[i].append(self.iteration(i, stop_condition=0.00001))
 
         return iterate_count
 

@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
 import cvxpy as cvx
 from progressbar import ProgressBar
+import numpy as np
 
-from Regression.ronbun.ronbun_jikken4.condition_check import *
-from Regression.ronbun.ronbun_jikken4.make_communication import Circle_communication
-from Regression.ronbun.ronbun_jikken4.ronbun_jikken3_agent import \
-    Agent_harnessing_quantize_add_send_data_ronbun_jikken3 as Agent_jikken3
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken4.condition_check import *
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken4.make_communication import Circle_communication
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken4.ronbun_jikken3_agent import Agent_harnessing_quantize_add_send_data_ronbun_jikken3 as Agent_jikken3
 
 np.random.seed(0)
 #Parameter_setting = True
@@ -276,9 +276,9 @@ plt.ylabel('$max_{i} f(x_i(k))-f^*$', fontsize=12)
 plt.grid(which='major', color='gray', linestyle=':')
 plt.grid(which='minor', color='gray', linestyle=':', axis='y')
 plt.minorticks_on()
-#plt.xlim([0, 120000])
-plt.xlim([0, 100000])
-plt.ylim([0.0000001, 10])
+plt.xlim([0, 120000])
+# plt.xlim([0, 100000])
+plt.ylim([0.00000001, 10])
 plt.legend()
 plt.savefig("cost_quantization_level.png")
 plt.savefig("cost_quantization_level.eps")

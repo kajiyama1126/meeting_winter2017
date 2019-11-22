@@ -1,8 +1,8 @@
 import numpy as np
-from Regression.ronbun.ronbun_jikken5_Non_strongly.non_convex_agent import Agent_harnessing_nonconvex_quantize_add_send_data,Agent_harnessing_nonconvex,Agent_harnessing_nonconvex_quantize_add_send_data_alpha
-from Regression.ronbun.ronbun_jikken5_Non_strongly.make_communication import Communication
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken5_Non_strongly.non_convex_agent import Agent_harnessing_nonconvex_quantize_add_send_data,Agent_harnessing_nonconvex,Agent_harnessing_nonconvex_quantize_add_send_data_alpha
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken5_Non_strongly.make_communication import Communication
 import matplotlib.pyplot as plt
-from Regression.ronbun.ronbun_jikken5_Non_strongly.Solver import Solver
+from quanzize.TAC2019_2019_0620.Regression.ronbun.ronbun_jikken5_Non_strongly.Solver import Solver
 
 
 np.random.seed(0)
@@ -88,6 +88,7 @@ plt.grid(which='minor', color='gray', linestyle=':')
 plt.xlabel('iteration $k$', fontsize=10)
 plt.ylabel('$max_{i}$ $f(x_i(k))-f^*$', fontsize=10)
 plt.xlim([0, iteration])
+plt.ylim([1e-7,1])
 #plt.ylim([0.00001, 100])
 plt.savefig("cost_compare_nonstrongly1.png")
 plt.savefig("cost_compare_nonstrongly1.eps")
